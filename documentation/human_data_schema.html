@@ -70,27 +70,20 @@
             
             <h3>5.1.3. Example: <code>human_data_ind.json</code></h3>
             <p>This example corresponds to the query tags defined in the <a href="trial_schema.html">Trial Schema</a> examples, assuming data from 2 participants. The keys <code>"trial_1_1"</code>, <code>"agent_goal"</code>, <code>"goal_confidence"</code>, <code>"statement_rating"</code>, and <code>"strategy_description"</code> are all defined in the <code>stimuli.jsonl</code> file.</p>
-            <pre><code>{
-  "trial_1_1": {
-    "agent_goal": [
-      { "idx": 0, "option_text": "Reaching the red box" },
-      { "idx": 1, "option_text": "Reaching the blue box" }
-    ],
-    "goal_confidence": [
-      95,
-      88
-    ]
+            <pre><code>  {"trial_1_1": {
+    "agent_goal": {
+      "agent_goal_1": [1, 2]
+    },
+    "goal_confidence": 91.5
   },
   "trial_1_2": {
-    "statement_rating": [
-      { "Statement 1": [80, 70], "Statement 2": [25, 35] }
-    ],
-    "strategy_description": [
-      "The agent seemed to be looking for the red box.",
-      "Unsure, but it moved towards the blue box first."
-    ]
+    "statement_rating": {
+      "statement_rating_1": 75,
+      "statement_rating_2": 30
+    }
   }
-}</code></pre>
+}
+</code></pre>
         </section>
 
         <section>
@@ -110,17 +103,23 @@
             <p>This example shows the aggregated data for the <code>human_data_ind.json</code> example above. The keys are derived from the <code>tag</code>s in <code>stimuli.jsonl</code> (e.g., <code>agent_goal</code> becomes <code>agent_goal_1</code>, <code>agent_goal_2</code>; <code>statement_rating</code> becomes <code>statement_rating_1</code>, <code>statement_rating_2</code>).</p>
             <pre><code>{
   "trial_1_1": {
-    "agent_goal": {
-      "agent_goal_1": 1,
-      "agent_goal_2": 1
-    },
-    "goal_confidence": 91.5
+    "agent_goal": [
+      [1, 2],
+      [0, 1, 2]
+    ],
+    "goal_confidence": [
+      95,
+      88
+    ]
   },
   "trial_1_2": {
-    "statement_rating": {
-      "statement_rating_1": 75,
-      "statement_rating_2": 30
-    }
+    "statement_rating": [
+      { "statement_rating_1": [80, 70], "statement_rating_2": [25, 35]}
+    ],
+    "strategy_description": [
+      "The agent seemed to be looking for the red box.",
+      "Unsure, but it moved towards the blue box first."
+    ]
   }
 }</code></pre>
         </section>

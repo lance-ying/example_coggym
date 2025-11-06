@@ -208,7 +208,18 @@
 }
 {
   "type": "test_trial",
-  "stimuli_id": "trial_agent_01",
+  "image": "assets/stimuli/demo_1.gif",
+  "commentary": "Observe the agent's action in the image above.
+<br><br>
+If more than one gem seems likely, you can select all likely gems. Remember that some keys might be hidden among the boxes.",
+  "queries": [
+    {
+      "prompt": "What is the agent's primary goal?",
+      "type": "multi-choice",
+      "options": ["Reaching the red box", "Reaching the blue box", "Looking for a key"],
+      "required": true,
+    }
+  ],
   "feedback": "In this example, the player is going for the red box!"
 }
 {
