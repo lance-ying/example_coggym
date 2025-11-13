@@ -148,28 +148,27 @@ STATEMENT_PROMPT = "Please rate the following statements about the agent's initi
 GOAL_OPTIONS = ["<icon>assets/icons/triangle.png</icon> Triangle", "<icon>assets/icons/square.png</icon> Square", "<icon>assets/icons/hexagon.png</icon> Hexagon", "<icon>assets/icons/circle.png</icon> Circle"]
 
 STIMULI_SETS = [
-    ["1_1_1", "1_1_2", "1_1_3", "1_1_4"],
-    ["1_2_1", "1_2_2", "1_2_3", "1_2_4"],
-    ["1_3_1", "1_3_2", "1_3_3", "1_3_4"],
-    ["2_1_1", "2_1_2", "2_1_3", "2_1_4"],
-    ["2_2_1", "2_2_2", "2_2_3", "2_2_4"],
-    ["2_3_1", "2_3_2", "2_3_3", "2_3_4"],
-    ["3_1_1", "3_1_2", "3_1_3", "3_1_4", "3_1_5"],
-    ["3_2_1", "3_2_2", "3_2_3", "3_2_4"],
-    ["3_3_1", "3_3_2", "3_3_3", "3_3_4"],
-    ["4_1_1", "4_1_2", "4_1_3", "4_1_4"],
-    ["4_2_1", "4_2_2", "4_2_3", "4_2_4"],
-    ["4_3_1", "4_3_2", "4_3_3", "4_3_4"],
-    ["5_1_1", "5_1_2", "5_1_3", "5_1_4"],
-    ["5_2_1", "5_2_2", "5_2_3", "5_2_4"],
-    ["6_1_1", "6_1_2", "6_1_3"],
-    ["6_2_1", "6_2_2", "6_2_3", "6_2_4"],
-    ["6_3_1", "6_3_2", "6_3_3", "6_3_4"],
-    ["7_1_1", "7_1_2", "7_1_3", "7_1_4"],
-    ["7_2_1", "7_2_2", "7_2_3", "7_2_4"],
-    ["7_3_1", "7_3_2", "7_3_3", "7_3_4"]
+    ["1_1_1", "1_1_2", "1_1_3"],
+    ["1_2_1", "1_2_2", "1_2_3"],
+    ["1_3_1", "1_3_2", "1_3_3"],
+    ["2_1_1", "2_1_2", "2_1_3"],
+    ["2_2_1", "2_2_2", "2_2_3"],
+    ["2_3_1", "2_3_2", "2_3_3"],
+    ["3_1_1", "3_1_2", "3_1_3", "3_1_4"],
+    ["3_2_1", "3_2_2", "3_2_3"],
+    ["3_3_1", "3_3_2", "3_3_3"],
+    ["4_1_1", "4_1_2", "4_1_3"],
+    ["4_2_1", "4_2_2", "4_2_3"],
+    ["4_3_1", "4_3_2", "4_3_3"],
+    ["5_1_1", "5_1_2", "5_1_3"],
+    ["5_2_1", "5_2_2", "5_2_3"],
+    ["6_1_1", "6_1_2"],
+    ["6_2_1", "6_2_2", "6_2_3"],
+    ["6_3_1", "6_3_2", "6_3_3"],
+    ["7_1_1", "7_1_2", "7_1_3"],
+    ["7_2_1", "7_2_2", "7_2_3"],
+    ["7_3_1", "7_3_2", "7_3_3"]
       ]
-
 
 TRIAL_TEMPLATE = """{
   "stimuli_id": "STIMULUS_ID",
@@ -178,7 +177,11 @@ TRIAL_TEMPLATE = """{
     "ASSETS_URL"
   ],
   "commentary": "",
-  "queries": [
+  "queries": QUERY_TEMPLATE
+  }
+  """
+QUERY_TEMPLATE = """
+ [
     {
       "prompt": GOAL_PROMPT,
       "type": "multi-select",
@@ -197,7 +200,6 @@ TRIAL_TEMPLATE = """{
       "required": true
     }
   ]
-}
 """
 
 STATEMENT_SLIDER_CONFIG = {
@@ -215,15 +217,22 @@ STATEMENT_SLIDER_CONFIG = {
 all_scenarios = []
 
 for stimulus_set in STIMULI_SETS:
-    for stimulus in stimulus_set:
-        scenario = TRIAL_TEMPLATE.replace("STIMULUS_ID", stimulus)
-        scenario = scenario.replace("ASSETS_URL", f"assets/stimuli/{stimulus}.gif")
-        scenario = scenario.replace("GOAL_PROMPT", json.dumps(GOAL_PROMPT))
-        scenario = scenario.replace("STATEMENT_PROMPT", json.dumps(STATEMENT_PROMPT))
-        scenario = scenario.replace("GOAL_OPTIONS", json.dumps(GOAL_OPTIONS))
-        scenario = scenario.replace("STATEMENT_SLIDER_CONFIG", json.dumps(STATEMENT_SLIDER_CONFIG))
-        scenario = scenario.replace("STATEMENT_OPTIONS", json.dumps(STATEMENTS[stimulus[:-2]]))
-        all_scenarios.append(scenario)
+    for i, stimulus in enumerate(stimulus_set):
+      scenario = TRIAL_TEMPLATE.replace("STIMULUS_ID", stimulus)
+      query = QUERY_TEMPLATE
+      if i < len(stimulus_set) - 1:
+            query = query.replace("GOAL_PROMPT", json.dumps(GOAL_PROMPT))
+            query = query.replace("STATEMENT_PROMPT", json.dumps(STATEMENT_PROMPT))
+            query = query.replace("GOAL_OPTIONS", json.dumps(GOAL_OPTIONS))
+            query = query.replace("STATEMENT_SLIDER_CONFIG", json.dumps(STATEMENT_SLIDER_CONFIG))
+            query = query.replace("STATEMENT_OPTIONS", json.dumps(STATEMENTS[stimulus[:-2]]))
+            scenario = scenario.replace("ASSETS_URL", f"assets/stimuli/{stimulus}.gif")
+            scenario = scenario.replace("QUERY_TEMPLATE", query)
+            all_scenarios.append(scenario)
+      else: 
+          scenario = scenario.replace("ASSETS_URL", f"assets/stimuli/{stimulus}.gif")
+          scenario = scenario.replace("QUERY_TEMPLATE", "[]")
+          all_scenarios.append(scenario)
 
 with open("stimuli.jsonl", "w") as f:
     for scenario in all_scenarios:

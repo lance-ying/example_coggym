@@ -1,0 +1,51 @@
+{
+    "experimentName": "Epistemic Language Understanding",
+    "description": "Participants observe short animations and answer questions about the agent's goals and current beliefs.",
+    "paperDOI": "https://doi.org/10.1111/example.doi.12345",
+    "taskType": [
+      "Social Cognition", 
+      "Theory of Mind"
+    ],
+    "responseType": [
+      "multi-choice",
+      "single-slider"
+    ],
+    "contributors": [
+      "Lance Ying"
+    ],
+    "stimuli_count": 40,
+    "judgment_count": 13542,
+    "participants_info":{
+      "count": 94,
+      "age": 35.7,
+      "gender": {"male": 27, "female": 67, "other": 0}
+    },
+    "experimentFlow": [
+      {
+      "blocks": [
+        ["1_1_1", "1_1_2", "1_1_3"],
+        ["1_2_1", "1_2_2", "1_2_3"],
+        ["1_3_1", "1_3_2", "1_3_3"],
+        ["2_1_1", "2_1_2", "2_1_3"],
+        ["2_2_1", "2_2_2", "2_2_3"],
+        ["2_3_1", "2_3_2", "2_3_3"],
+        ["3_1_1", "3_1_2", "3_1_3", "3_1_4"],
+        ["3_2_1", "3_2_2", "3_2_3"],
+        ["3_3_1", "3_3_2", "3_3_3"],
+        ["4_1_1", "4_1_2", "4_1_3"],
+        ["4_2_1", "4_2_2", "4_2_3"],
+        ["4_3_1", "4_3_2", "4_3_3"],
+        ["5_1_1", "5_1_2", "5_1_3"],
+        ["5_2_1", "5_2_2", "5_2_3"],
+        ["6_1_1", "6_1_2"],
+        ["6_2_1", "6_2_2", "6_2_3"],
+        ["6_3_1", "6_3_2", "6_3_3"],
+        ["7_1_1", "7_1_2", "7_1_3"],
+        ["7_2_1", "7_2_2", "7_2_3"],
+        ["7_3_1", "7_3_2", "7_3_3"]
+          ],
+      "block_randomization": true,
+      "stimuli_randomization": false
+    }
+  ]
+  }

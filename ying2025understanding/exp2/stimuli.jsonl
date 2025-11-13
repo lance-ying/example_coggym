@@ -15,9 +15,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially believed that box 3 contained a blue key.", "The player initially believed that box 1 and 2 contained no blue key.", "The player initially believed that box 1 might have the blue key.", "The player initially believed the blue key was not in box 2.", "The player initially thought that there may have been a key in box 2."],
+      "options": ["The player believes the blue key is in box 1.", "The player is sure there must be a blue key in box 3.", "The player believes that box 1 or 2 contain the blue key, but leans more towards box 1.", "The player thinks that box 1 is empty.", "The player believes that box 1 contains the blue key."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -35,16 +35,6 @@
     "assets/stimuli/1_1_2.gif"
   ],
   "commentary": "",
-  "queries": []
-  }
-  
-{
-  "stimuli_id": "1_1_3",
-  "input_type": "img",
-  "media_url": [
-    "assets/stimuli/1_1_3.gif"
-  ],
-  "commentary": "",
   "queries": 
  [
     {
@@ -55,9 +45,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially believed that box 3 contained a blue key.", "The player initially believed that box 1 and 2 contained no blue key.", "The player initially believed that box 1 might have the blue key.", "The player initially believed the blue key was not in box 2.", "The player initially thought that there may have been a key in box 2."],
+      "options": ["The player believes the blue key is in box 1.", "The player is sure there must be a blue key in box 3.", "The player believes that box 1 or 2 contain the blue key, but leans more towards box 1.", "The player thinks that box 1 is empty.", "The player believes that box 1 contains the blue key."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -66,6 +56,16 @@
     }
   ]
 
+  }
+  
+{
+  "stimuli_id": "1_1_3",
+  "input_type": "img",
+  "media_url": [
+    "assets/stimuli/1_1_3.gif"
+  ],
+  "commentary": "",
+  "queries": []
   }
   
 {
@@ -85,9 +85,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially believed that box 3 contained a blue key.", "The player initially believed that box 1 might have the blue key.", "The player initially had no idea which box contained a blue key.", "The player initially believed that 1 of the boxes had a blue key.", "The player initially believed that box 1 and 2 contained no blue key."],
+      "options": ["The player is sure there must be a blue key in box 3.", "The player knows that boxes 1 and 2 did not have the blue key.", "The player believes that the blue key is in box number 3.", "The player believes that box 3 is more likely to contain a red key than box 1.", "The player believes that box 3 is empty."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -105,16 +105,6 @@
     "assets/stimuli/1_2_2.gif"
   ],
   "commentary": "",
-  "queries": []
-  }
-  
-{
-  "stimuli_id": "1_2_3",
-  "input_type": "img",
-  "media_url": [
-    "assets/stimuli/1_2_3.gif"
-  ],
-  "commentary": "",
   "queries": 
  [
     {
@@ -125,9 +115,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially believed that box 3 contained a blue key.", "The player initially believed that box 1 might have the blue key.", "The player initially had no idea which box contained a blue key.", "The player initially believed that 1 of the boxes had a blue key.", "The player initially believed that box 1 and 2 contained no blue key."],
+      "options": ["The player is sure there must be a blue key in box 3.", "The player knows that boxes 1 and 2 did not have the blue key.", "The player believes that the blue key is in box number 3.", "The player believes that box 3 is more likely to contain a red key than box 1.", "The player believes that box 3 is empty."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -136,6 +126,16 @@
     }
   ]
 
+  }
+  
+{
+  "stimuli_id": "1_2_3",
+  "input_type": "img",
+  "media_url": [
+    "assets/stimuli/1_2_3.gif"
+  ],
+  "commentary": "",
+  "queries": []
   }
   
 {
@@ -155,9 +155,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially believed that box 2 contained a blue key.", "The player initially believed that the first box is empty and held no key.", "The player initially believed there was an equal chance of the key being in box 1, box 2, or box 3.", "The player initially thought that there may have been a key in box 2.", "The player initially believed that box 3 was empty."],
+      "options": ["The player thinks that box 1 is empty.", "The player is uncertain about the contents of box 3.", "The player believes that box 2 is empty.", "The player believes that if box 1 does not have a blue key, then box 3 has a blue key.", "The player believes there may be a key in box 1."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -175,16 +175,6 @@
     "assets/stimuli/1_3_2.gif"
   ],
   "commentary": "",
-  "queries": []
-  }
-  
-{
-  "stimuli_id": "1_3_3",
-  "input_type": "img",
-  "media_url": [
-    "assets/stimuli/1_3_3.gif"
-  ],
-  "commentary": "",
   "queries": 
  [
     {
@@ -195,9 +185,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially believed that box 2 contained a blue key.", "The player initially believed that the first box is empty and held no key.", "The player initially believed there was an equal chance of the key being in box 1, box 2, or box 3.", "The player initially thought that there may have been a key in box 2.", "The player initially believed that box 3 was empty."],
+      "options": ["The player thinks that box 1 is empty.", "The player is uncertain about the contents of box 3.", "The player believes that box 2 is empty.", "The player believes that if box 1 does not have a blue key, then box 3 has a blue key.", "The player believes there may be a key in box 1."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -206,6 +196,16 @@
     }
   ]
 
+  }
+  
+{
+  "stimuli_id": "1_3_3",
+  "input_type": "img",
+  "media_url": [
+    "assets/stimuli/1_3_3.gif"
+  ],
+  "commentary": "",
+  "queries": []
   }
   
 {
@@ -225,9 +225,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially did not believe box 3 had a red key.", "The player initially knew that box 3 did not have the red key.", "The player initially thought that box 2 contained a red key.", "The player initially believed the red key was in box 1.", "The player initially did not know if box 2 had a key."],
+      "options": ["The player knows that box 1 does not have the blue key.", "The player believes if the red key is not in box 2 then it must be in box 3.", "The player believes that box 2 has a key.", "The player believes box 2 might hold a red key.", "The player knows that box 2 is empty."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -245,16 +245,6 @@
     "assets/stimuli/2_1_2.gif"
   ],
   "commentary": "",
-  "queries": []
-  }
-  
-{
-  "stimuli_id": "2_1_3",
-  "input_type": "img",
-  "media_url": [
-    "assets/stimuli/2_1_3.gif"
-  ],
-  "commentary": "",
   "queries": 
  [
     {
@@ -265,9 +255,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially did not believe box 3 had a red key.", "The player initially knew that box 3 did not have the red key.", "The player initially thought that box 2 contained a red key.", "The player initially believed the red key was in box 1.", "The player initially did not know if box 2 had a key."],
+      "options": ["The player knows that box 1 does not have the blue key.", "The player believes if the red key is not in box 2 then it must be in box 3.", "The player believes that box 2 has a key.", "The player believes box 2 might hold a red key.", "The player knows that box 2 is empty."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -276,6 +266,16 @@
     }
   ]
 
+  }
+  
+{
+  "stimuli_id": "2_1_3",
+  "input_type": "img",
+  "media_url": [
+    "assets/stimuli/2_1_3.gif"
+  ],
+  "commentary": "",
+  "queries": []
   }
   
 {
@@ -295,9 +295,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially believed that box 2 was more likely to contain a red key than box 1 and box 3.", "The player initially thought that box 1 most likely contained a red key.", "The player initially thought box 3 had the red key.", "The player initially believed that box 1 was empty.", "The player initially believed that box 3 was empty."],
+      "options": ["The player thinks that box 1 is empty.", "The player believes that box 3 is empty.", "The player thinks that box 1 is empty.", "The player believes that box 3 may contain a red key.", "The player believes that box 3 is more likely to contain a red key than box 1."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -315,16 +315,6 @@
     "assets/stimuli/2_2_2.gif"
   ],
   "commentary": "",
-  "queries": []
-  }
-  
-{
-  "stimuli_id": "2_2_3",
-  "input_type": "img",
-  "media_url": [
-    "assets/stimuli/2_2_3.gif"
-  ],
-  "commentary": "",
   "queries": 
  [
     {
@@ -335,9 +325,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially believed that box 2 was more likely to contain a red key than box 1 and box 3.", "The player initially thought that box 1 most likely contained a red key.", "The player initially thought box 3 had the red key.", "The player initially believed that box 1 was empty.", "The player initially believed that box 3 was empty."],
+      "options": ["The player thinks that box 1 is empty.", "The player believes that box 3 is empty.", "The player thinks that box 1 is empty.", "The player believes that box 3 may contain a red key.", "The player believes that box 3 is more likely to contain a red key than box 1."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -346,6 +336,16 @@
     }
   ]
 
+  }
+  
+{
+  "stimuli_id": "2_2_3",
+  "input_type": "img",
+  "media_url": [
+    "assets/stimuli/2_2_3.gif"
+  ],
+  "commentary": "",
+  "queries": []
   }
   
 {
@@ -365,9 +365,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially thought that box 1 most likely contained a red key.", "The player initially expected to find a key in box 3.", "The player initially thought that box 2 contained a red key.", "The player initially knew there would be a red key in 1 of the boxes.", "The player initially thought that box 2 did not contain a red key."],
+      "options": ["The player believes that box 2 may contain the red key.", "The player believes that box 2 is empty.", "The player thinks that boxes 2 and 3 might or might not contain a red key.", "The player believes the red key is in box 2.", "The player thinks that there's more likely to be a red key in box 1 or 3 than box 2."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -385,16 +385,6 @@
     "assets/stimuli/2_3_2.gif"
   ],
   "commentary": "",
-  "queries": []
-  }
-  
-{
-  "stimuli_id": "2_3_3",
-  "input_type": "img",
-  "media_url": [
-    "assets/stimuli/2_3_3.gif"
-  ],
-  "commentary": "",
   "queries": 
  [
     {
@@ -405,9 +395,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially thought that box 1 most likely contained a red key.", "The player initially expected to find a key in box 3.", "The player initially thought that box 2 contained a red key.", "The player initially knew there would be a red key in 1 of the boxes.", "The player initially thought that box 2 did not contain a red key."],
+      "options": ["The player believes that box 2 may contain the red key.", "The player believes that box 2 is empty.", "The player thinks that boxes 2 and 3 might or might not contain a red key.", "The player believes the red key is in box 2.", "The player thinks that there's more likely to be a red key in box 1 or 3 than box 2."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -416,6 +406,16 @@
     }
   ]
 
+  }
+  
+{
+  "stimuli_id": "2_3_3",
+  "input_type": "img",
+  "media_url": [
+    "assets/stimuli/2_3_3.gif"
+  ],
+  "commentary": "",
+  "queries": []
   }
   
 {
@@ -435,9 +435,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially believed there was no key in box 1.", "The player initially knew there was a blue key in box 1, box 2, or box 3.", "The player initially believed box 1 was empty.", "The player initially knew there was a key in box 2 or box 3.", "The player initially believed there might be a chance of seeing a key in box 2."],
+      "options": ["The player believes box 2 is least likely to hold the blue key.", "The player believes that box 3 holds the blue key.", "The player knows box 3 contains a blue key.", "The player thinks that box 1 is empty.", "The player knows that box 2 is empty."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -465,9 +465,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially believed there was no key in box 1.", "The player initially knew there was a blue key in box 1, box 2, or box 3.", "The player initially believed box 1 was empty.", "The player initially knew there was a key in box 2 or box 3.", "The player initially believed there might be a chance of seeing a key in box 2."],
+      "options": ["The player believes box 2 is least likely to hold the blue key.", "The player believes that box 3 holds the blue key.", "The player knows box 3 contains a blue key.", "The player thinks that box 1 is empty.", "The player knows that box 2 is empty."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -485,16 +485,6 @@
     "assets/stimuli/3_1_3.gif"
   ],
   "commentary": "",
-  "queries": []
-  }
-  
-{
-  "stimuli_id": "3_1_4",
-  "input_type": "img",
-  "media_url": [
-    "assets/stimuli/3_1_4.gif"
-  ],
-  "commentary": "",
   "queries": 
  [
     {
@@ -505,9 +495,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially believed there was no key in box 1.", "The player initially knew there was a blue key in box 1, box 2, or box 3.", "The player initially believed box 1 was empty.", "The player initially knew there was a key in box 2 or box 3.", "The player initially believed there might be a chance of seeing a key in box 2."],
+      "options": ["The player believes box 2 is least likely to hold the blue key.", "The player believes that box 3 holds the blue key.", "The player knows box 3 contains a blue key.", "The player thinks that box 1 is empty.", "The player knows that box 2 is empty."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -516,6 +506,16 @@
     }
   ]
 
+  }
+  
+{
+  "stimuli_id": "3_1_4",
+  "input_type": "img",
+  "media_url": [
+    "assets/stimuli/3_1_4.gif"
+  ],
+  "commentary": "",
+  "queries": []
   }
   
 {
@@ -535,9 +535,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially did not know which box might contain a red key.", "The player initially believed there might be a key in box 1.", "The player initially believed that box 1 was empty.", "The player initially did not know the color of the key in box 3.", "The player initially believed a red key was most likely in box 2."],
+      "options": ["The player believes that box 2 may contain the red key.", "The player believes the red key is in box 2.", "The player does not know which box contains a red key.", "The player believes that box 3 may contain a red key.", "The player believes that box 1 might have a red key."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -555,16 +555,6 @@
     "assets/stimuli/3_2_2.gif"
   ],
   "commentary": "",
-  "queries": []
-  }
-  
-{
-  "stimuli_id": "3_2_3",
-  "input_type": "img",
-  "media_url": [
-    "assets/stimuli/3_2_3.gif"
-  ],
-  "commentary": "",
   "queries": 
  [
     {
@@ -575,9 +565,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially did not know which box might contain a red key.", "The player initially believed there might be a key in box 1.", "The player initially believed that box 1 was empty.", "The player initially did not know the color of the key in box 3.", "The player initially believed a red key was most likely in box 2."],
+      "options": ["The player believes that box 2 may contain the red key.", "The player believes the red key is in box 2.", "The player does not know which box contains a red key.", "The player believes that box 3 may contain a red key.", "The player believes that box 1 might have a red key."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -586,6 +576,16 @@
     }
   ]
 
+  }
+  
+{
+  "stimuli_id": "3_2_3",
+  "input_type": "img",
+  "media_url": [
+    "assets/stimuli/3_2_3.gif"
+  ],
+  "commentary": "",
+  "queries": []
   }
   
 {
@@ -605,9 +605,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially knew that box 1 did not have a red key.", "The player initially believed a blue key was more likely to be inside box 2 than box 1 or box 3.", "The player initially believed box 1 was not empty.", "The player initially believed a red key was most likely in box 2.", "The player initially knew that box 1 did not have the blue key."],
+      "options": ["The player knows that box 1 does not have the blue key.", "The player thinks that box 1 is empty.", "The player is unsure whether the blue key is in box 3 or 1.", "The player believes that box 3 will either be empty or have a blue key.", "The player believes the red key is in box 2."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -625,16 +625,6 @@
     "assets/stimuli/3_3_2.gif"
   ],
   "commentary": "",
-  "queries": []
-  }
-  
-{
-  "stimuli_id": "3_3_3",
-  "input_type": "img",
-  "media_url": [
-    "assets/stimuli/3_3_3.gif"
-  ],
-  "commentary": "",
   "queries": 
  [
     {
@@ -645,9 +635,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially knew that box 1 did not have a red key.", "The player initially believed a blue key was more likely to be inside box 2 than box 1 or box 3.", "The player initially believed box 1 was not empty.", "The player initially believed a red key was most likely in box 2.", "The player initially knew that box 1 did not have the blue key."],
+      "options": ["The player knows that box 1 does not have the blue key.", "The player thinks that box 1 is empty.", "The player is unsure whether the blue key is in box 3 or 1.", "The player believes that box 3 will either be empty or have a blue key.", "The player believes the red key is in box 2."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -656,6 +646,16 @@
     }
   ]
 
+  }
+  
+{
+  "stimuli_id": "3_3_3",
+  "input_type": "img",
+  "media_url": [
+    "assets/stimuli/3_3_3.gif"
+  ],
+  "commentary": "",
+  "queries": []
   }
   
 {
@@ -675,9 +675,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially did not have confidence box 1 would hold the red key.", "The player initially believed that both box 2 and 3 must each contain a red key.", "The player initially believed box 2 and 3 might be empty.", "The player initially believed they could get a red key in box 2 or 3.", "The player initially believed that box 1 did not contain a red key."],
+      "options": ["The player believes box 1 is more likely to contain a red key than box 2.", "The player believes that box 3 may contain a red key.", "The player thinks that there's more likely to be a red key in box 2 or 3 than box 1.", "The player believes that either box 2 or 3 contains a red key.", "The player believes box 1 does not hold a red key."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -695,16 +695,6 @@
     "assets/stimuli/4_1_2.gif"
   ],
   "commentary": "",
-  "queries": []
-  }
-  
-{
-  "stimuli_id": "4_1_3",
-  "input_type": "img",
-  "media_url": [
-    "assets/stimuli/4_1_3.gif"
-  ],
-  "commentary": "",
   "queries": 
  [
     {
@@ -715,9 +705,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially did not have confidence box 1 would hold the red key.", "The player initially believed that both box 2 and 3 must each contain a red key.", "The player initially believed box 2 and 3 might be empty.", "The player initially believed they could get a red key in box 2 or 3.", "The player initially believed that box 1 did not contain a red key."],
+      "options": ["The player believes box 1 is more likely to contain a red key than box 2.", "The player believes that box 3 may contain a red key.", "The player thinks that there's more likely to be a red key in box 2 or 3 than box 1.", "The player believes that either box 2 or 3 contains a red key.", "The player believes box 1 does not hold a red key."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -726,6 +716,16 @@
     }
   ]
 
+  }
+  
+{
+  "stimuli_id": "4_1_3",
+  "input_type": "img",
+  "media_url": [
+    "assets/stimuli/4_1_3.gif"
+  ],
+  "commentary": "",
+  "queries": []
   }
   
 {
@@ -745,9 +745,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially believed that there was a key in box 2.", "The player initially believed a red key was more likely to be in box 2 or 3 than box 1.", "The player initially believed a red key was most likely in box 2.", "The player initially believed that box 1 had a red key.", "The player initially believed that either box 1 or 2 contained a key."],
+      "options": ["The player believes that box 3 may contain a red key.", "The player knows that box 2 is empty.", "The player is sure that box 1 and 2 are empty.", "The player believes that box 2 may contain a red key.", "The player thinks that box 1 is empty."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -765,16 +765,6 @@
     "assets/stimuli/4_2_2.gif"
   ],
   "commentary": "",
-  "queries": []
-  }
-  
-{
-  "stimuli_id": "4_2_3",
-  "input_type": "img",
-  "media_url": [
-    "assets/stimuli/4_2_3.gif"
-  ],
-  "commentary": "",
   "queries": 
  [
     {
@@ -785,9 +775,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially believed that there was a key in box 2.", "The player initially believed a red key was more likely to be in box 2 or 3 than box 1.", "The player initially believed a red key was most likely in box 2.", "The player initially believed that box 1 had a red key.", "The player initially believed that either box 1 or 2 contained a key."],
+      "options": ["The player believes that box 3 may contain a red key.", "The player knows that box 2 is empty.", "The player is sure that box 1 and 2 are empty.", "The player believes that box 2 may contain a red key.", "The player thinks that box 1 is empty."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -796,6 +786,16 @@
     }
   ]
 
+  }
+  
+{
+  "stimuli_id": "4_2_3",
+  "input_type": "img",
+  "media_url": [
+    "assets/stimuli/4_2_3.gif"
+  ],
+  "commentary": "",
+  "queries": []
   }
   
 {
@@ -815,9 +815,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially believed that either box 1 and 2 contained the red key.", "The player initially did not know if box 3 contained a red key.", "The player initially believed there might be a key in box 1.", "The player initially did not know for sure which box contained a key.", "The player initially thought that box 2 might have the red key."],
+      "options": ["The player believes that box 2 may contain a red key.", "The player is unsure which box has a key.", "The player believes that box 3 may contain a red key.", "The player believes that the red key must be in box 3.", "The player believes there might be a key in box 2."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -835,16 +835,6 @@
     "assets/stimuli/4_3_2.gif"
   ],
   "commentary": "",
-  "queries": []
-  }
-  
-{
-  "stimuli_id": "4_3_3",
-  "input_type": "img",
-  "media_url": [
-    "assets/stimuli/4_3_3.gif"
-  ],
-  "commentary": "",
   "queries": 
  [
     {
@@ -855,9 +845,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially believed that either box 1 and 2 contained the red key.", "The player initially did not know if box 3 contained a red key.", "The player initially believed there might be a key in box 1.", "The player initially did not know for sure which box contained a key.", "The player initially thought that box 2 might have the red key."],
+      "options": ["The player believes that box 2 may contain a red key.", "The player is unsure which box has a key.", "The player believes that box 3 may contain a red key.", "The player believes that the red key must be in box 3.", "The player believes there might be a key in box 2."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -866,6 +856,16 @@
     }
   ]
 
+  }
+  
+{
+  "stimuli_id": "4_3_3",
+  "input_type": "img",
+  "media_url": [
+    "assets/stimuli/4_3_3.gif"
+  ],
+  "commentary": "",
+  "queries": []
   }
   
 {
@@ -885,9 +885,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially knew that there was a key in box 1.", "The player initially knew that box 1 did not have a red key.", "The player initially believed that box 2 was empty.", "The player initially thought that box 2 might have the red key.", "The player initially believed a red key was more likely to be in box 2 or 3 than box 1."],
+      "options": ["The player believes that box 3 might have a red key.", "The player believes that there is a red key in box 2.", "The player believes that box 1 is empty.", "The player believes that either box 2 or 3 has a red key.", "The player believes that the red key must be in box 3."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -905,16 +905,6 @@
     "assets/stimuli/5_1_2.gif"
   ],
   "commentary": "",
-  "queries": []
-  }
-  
-{
-  "stimuli_id": "5_1_3",
-  "input_type": "img",
-  "media_url": [
-    "assets/stimuli/5_1_3.gif"
-  ],
-  "commentary": "",
   "queries": 
  [
     {
@@ -925,9 +915,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially knew that there was a key in box 1.", "The player initially knew that box 1 did not have a red key.", "The player initially believed that box 2 was empty.", "The player initially thought that box 2 might have the red key.", "The player initially believed a red key was more likely to be in box 2 or 3 than box 1."],
+      "options": ["The player believes that box 3 might have a red key.", "The player believes that there is a red key in box 2.", "The player believes that box 1 is empty.", "The player believes that either box 2 or 3 has a red key.", "The player believes that the red key must be in box 3."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -936,6 +926,16 @@
     }
   ]
 
+  }
+  
+{
+  "stimuli_id": "5_1_3",
+  "input_type": "img",
+  "media_url": [
+    "assets/stimuli/5_1_3.gif"
+  ],
+  "commentary": "",
+  "queries": []
   }
   
 {
@@ -955,9 +955,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially believed there might be a key in box 1.", "The player initially believed a red key was more likely to be in box 2 or 3 than box 1.", "The player initially did not know for sure which box contained the key.", "The player initially believed that either box 1 or 2 contained the red key.", "The player initially believed that box 2 had a red key."],
+      "options": ["The player believes that box 2 may contain a red key.", "The player believes that box 3 is empty.", "The player knows that the boxes 1 and 2 were both empty.", "The player believes that the red key must be in box 3.", "The player is uncertain about the contents of box 3."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -975,7 +975,27 @@
     "assets/stimuli/5_2_2.gif"
   ],
   "commentary": "",
-  "queries": []
+  "queries": 
+ [
+    {
+      "prompt": "Which gem(s) are most likely to be the player's goal?",
+      "type": "multi-select",
+      "tag": "agent_goal",
+      "options": ["<icon>assets/icons/triangle.png</icon> Triangle", "<icon>assets/icons/square.png</icon> Square", "<icon>assets/icons/hexagon.png</icon> Hexagon", "<icon>assets/icons/circle.png</icon> Circle"],
+      "required": true
+    },
+    {
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
+      "type": "multi-slider",
+      "options": ["The player believes that box 2 may contain a red key.", "The player believes that box 3 is empty.", "The player knows that the boxes 1 and 2 were both empty.", "The player believes that the red key must be in box 3.", "The player is uncertain about the contents of box 3."],
+      "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
+      "sampling_size": 2,
+      "tag": "statement_rating",
+      "randomize_order": true,
+      "required": true
+    }
+  ]
+
   }
   
 {
@@ -985,27 +1005,7 @@
     "assets/stimuli/5_2_3.gif"
   ],
   "commentary": "",
-  "queries": 
- [
-    {
-      "prompt": "Which gem(s) are most likely to be the player's goal?",
-      "type": "multi-select",
-      "tag": "agent_goal",
-      "options": ["<icon>assets/icons/triangle.png</icon> Triangle", "<icon>assets/icons/square.png</icon> Square", "<icon>assets/icons/hexagon.png</icon> Hexagon", "<icon>assets/icons/circle.png</icon> Circle"],
-      "required": true
-    },
-    {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
-      "type": "multi-slider",
-      "options": ["The player initially believed there might be a key in box 1.", "The player initially believed a red key was more likely to be in box 2 or 3 than box 1.", "The player initially did not know for sure which box contained the key.", "The player initially believed that either box 1 or 2 contained the red key.", "The player initially believed that box 2 had a red key."],
-      "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
-      "sampling_size": 2,
-      "tag": "statement_rating",
-      "randomize_order": true,
-      "required": true
-    }
-  ]
-
+  "queries": []
   }
   
 {
@@ -1015,16 +1015,6 @@
     "assets/stimuli/6_1_1.gif"
   ],
   "commentary": "",
-  "queries": []
-  }
-  
-{
-  "stimuli_id": "6_1_2",
-  "input_type": "img",
-  "media_url": [
-    "assets/stimuli/6_1_2.gif"
-  ],
-  "commentary": "",
   "queries": 
  [
     {
@@ -1035,9 +1025,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially knew that there was a key in box 1.", "The player initially believed that box 1 might contain a blue key or a red key.", "The player initially believed that a red key would be located in either box 1 or box 2.", "The player initially thought that box 1 was empty.", "The player initially believed that box 2 was empty."],
+      "options": ["The player believes that box 2 probably has a key.", "The player knows that box 2 is empty.", "The player knows that there is a blue or red key in box 1.", "The player believes that either a red key or a blue key is in box 2.", "The player believes that box 1 might hold a blue key."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -1046,6 +1036,16 @@
     }
   ]
 
+  }
+  
+{
+  "stimuli_id": "6_1_2",
+  "input_type": "img",
+  "media_url": [
+    "assets/stimuli/6_1_2.gif"
+  ],
+  "commentary": "",
+  "queries": []
   }
   
 {
@@ -1065,9 +1065,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially believed that either box 1 or 2 contained the blue key.", "The player initially believed that box 1 and 2 contained no blue key.", "The player initially believed that box 2 had a red key.", "The player initially believed that box 1 had a red key.", "The player initially believed there was a blue key in either box 1 or box 2."],
+      "options": ["The player believes that box number 2 holds the red key.", "The player believes that box 2 holds a blue key.", "The player believes the blue key is in box 1.", "The player believes that there is a red key in box 2.", "The player believes there might be a key in Box 1 or Box 2."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -1085,16 +1085,6 @@
     "assets/stimuli/6_2_2.gif"
   ],
   "commentary": "",
-  "queries": []
-  }
-  
-{
-  "stimuli_id": "6_2_3",
-  "input_type": "img",
-  "media_url": [
-    "assets/stimuli/6_2_3.gif"
-  ],
-  "commentary": "",
   "queries": 
  [
     {
@@ -1105,9 +1095,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially believed that either box 1 or 2 contained the blue key.", "The player initially believed that box 1 and 2 contained no blue key.", "The player initially believed that box 2 had a red key.", "The player initially believed that box 1 had a red key.", "The player initially believed there was a blue key in either box 1 or box 2."],
+      "options": ["The player believes that box number 2 holds the red key.", "The player believes that box 2 holds a blue key.", "The player believes the blue key is in box 1.", "The player believes that there is a red key in box 2.", "The player believes there might be a key in Box 1 or Box 2."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -1116,6 +1106,16 @@
     }
   ]
 
+  }
+  
+{
+  "stimuli_id": "6_2_3",
+  "input_type": "img",
+  "media_url": [
+    "assets/stimuli/6_2_3.gif"
+  ],
+  "commentary": "",
+  "queries": []
   }
   
 {
@@ -1135,9 +1135,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially believed that box 2 was empty.", "The player was initially unsure about the contents of boxes 1 and 2.", "The player initially believed box 1 had a red key.", "The player initially believed that box 2 had a red key.", "The player initially believed there might be a key in box 1."],
+      "options": ["The player believes that the boxes are both empty.", "The player believes that box 1 might have a red key.", "The player believes the red key is in box 2.", "The player believes that box 1 is empty.", "The player believes there might be a key in box 1 or box 2."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -1155,16 +1155,6 @@
     "assets/stimuli/6_3_2.gif"
   ],
   "commentary": "",
-  "queries": []
-  }
-  
-{
-  "stimuli_id": "6_3_3",
-  "input_type": "img",
-  "media_url": [
-    "assets/stimuli/6_3_3.gif"
-  ],
-  "commentary": "",
   "queries": 
  [
     {
@@ -1175,9 +1165,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially believed that box 2 was empty.", "The player was initially unsure about the contents of boxes 1 and 2.", "The player initially believed box 1 had a red key.", "The player initially believed that box 2 had a red key.", "The player initially believed there might be a key in box 1."],
+      "options": ["The player believes that the boxes are both empty.", "The player believes that box 1 might have a red key.", "The player believes the red key is in box 2.", "The player believes that box 1 is empty.", "The player believes there might be a key in box 1 or box 2."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -1186,6 +1176,16 @@
     }
   ]
 
+  }
+  
+{
+  "stimuli_id": "6_3_3",
+  "input_type": "img",
+  "media_url": [
+    "assets/stimuli/6_3_3.gif"
+  ],
+  "commentary": "",
+  "queries": []
   }
   
 {
@@ -1205,9 +1205,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially believed box 1 had a red key.", "The player initially believed that box 2 might have a red key.", "The player initially thought that boxes 2 or 3 contained a key.", "The player initially thought that box 1 was empty.", "The player initially believed box 2 and 3 might be empty."],
+      "options": ["The player believes there might be a red key in box 3.", "The player knows that box 2 is empty.", "The player knows that box 3 is empty.", "The player believes that there is a red key in box 2.", "The player believes that box 1 might have a red key."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -1225,16 +1225,6 @@
     "assets/stimuli/7_1_2.gif"
   ],
   "commentary": "",
-  "queries": []
-  }
-  
-{
-  "stimuli_id": "7_1_3",
-  "input_type": "img",
-  "media_url": [
-    "assets/stimuli/7_1_3.gif"
-  ],
-  "commentary": "",
   "queries": 
  [
     {
@@ -1245,9 +1235,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially believed box 1 had a red key.", "The player initially believed that box 2 might have a red key.", "The player initially thought that boxes 2 or 3 contained a key.", "The player initially thought that box 1 was empty.", "The player initially believed box 2 and 3 might be empty."],
+      "options": ["The player believes there might be a red key in box 3.", "The player knows that box 2 is empty.", "The player knows that box 3 is empty.", "The player believes that there is a red key in box 2.", "The player believes that box 1 might have a red key."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -1256,6 +1246,16 @@
     }
   ]
 
+  }
+  
+{
+  "stimuli_id": "7_1_3",
+  "input_type": "img",
+  "media_url": [
+    "assets/stimuli/7_1_3.gif"
+  ],
+  "commentary": "",
+  "queries": []
   }
   
 {
@@ -1275,9 +1275,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially believed box 2 and 3 might be empty.", "The player initially thought that box 1 was most likely to contain a red key.", "The player initially did not have confidence box 1 would hold the red key.", "The player initially believed there was a red key in box 2.", "The player initially believed the red key could be in box 2."],
+      "options": ["The player knows that box 1 does not have the red key.", "The player believes that box number 2 holds the red key.", "The player believes that box 1 might have a red key.", "The player believes there might be a key in box 2.", "The player believes that box 2 is more likely to contain a red key than box 3."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -1295,16 +1295,6 @@
     "assets/stimuli/7_2_2.gif"
   ],
   "commentary": "",
-  "queries": []
-  }
-  
-{
-  "stimuli_id": "7_2_3",
-  "input_type": "img",
-  "media_url": [
-    "assets/stimuli/7_2_3.gif"
-  ],
-  "commentary": "",
   "queries": 
  [
     {
@@ -1315,9 +1305,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially believed box 2 and 3 might be empty.", "The player initially thought that box 1 was most likely to contain a red key.", "The player initially did not have confidence box 1 would hold the red key.", "The player initially believed there was a red key in box 2.", "The player initially believed the red key could be in box 2."],
+      "options": ["The player knows that box 1 does not have the red key.", "The player believes that box number 2 holds the red key.", "The player believes that box 1 might have a red key.", "The player believes there might be a key in box 2.", "The player believes that box 2 is more likely to contain a red key than box 3."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -1326,6 +1316,16 @@
     }
   ]
 
+  }
+  
+{
+  "stimuli_id": "7_2_3",
+  "input_type": "img",
+  "media_url": [
+    "assets/stimuli/7_2_3.gif"
+  ],
+  "commentary": "",
+  "queries": []
   }
   
 {
@@ -1345,9 +1345,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially believed that box 2 was empty.", "The player initially believed box 2 and 3 might be empty.", "The player initially believed that box 2 had a red key.", "The player was initially unsure what box contained the red key.", "The player initially believed box 1 had a red key."],
+      "options": ["The player believes there might be a red key in box 3.", "The player believes that box 1 is empty.", "The player believes that box 2 would have a red key if box 3 is empty.", "The player believes there might be a key in box 2.", "The player knows that box 1 does not have the red key."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -1365,16 +1365,6 @@
     "assets/stimuli/7_3_2.gif"
   ],
   "commentary": "",
-  "queries": []
-  }
-  
-{
-  "stimuli_id": "7_3_3",
-  "input_type": "img",
-  "media_url": [
-    "assets/stimuli/7_3_3.gif"
-  ],
-  "commentary": "",
   "queries": 
  [
     {
@@ -1385,9 +1375,9 @@
       "required": true
     },
     {
-    "prompt": "Please rate the following statements about the agent's initial beliefs:",
+    "prompt": "Please rate the following statements about the agent's current beliefs:",
       "type": "multi-slider",
-      "options": ["The player initially believed that box 2 was empty.", "The player initially believed box 2 and 3 might be empty.", "The player initially believed that box 2 had a red key.", "The player was initially unsure what box contained the red key.", "The player initially believed box 1 had a red key."],
+      "options": ["The player believes there might be a red key in box 3.", "The player believes that box 1 is empty.", "The player believes that box 2 would have a red key if box 3 is empty.", "The player believes there might be a key in box 2.", "The player knows that box 1 does not have the red key."],
       "slider_config": {"min": 1, "max": 7, "default_value": 4, "labels": [{"value": 1, "label": "Extremely unlikely"}, {"value": 7, "label": "Extremely likely"}], "show_label_values": true, "required": true},
       "sampling_size": 2,
       "tag": "statement_rating",
@@ -1396,5 +1386,15 @@
     }
   ]
 
+  }
+  
+{
+  "stimuli_id": "7_3_3",
+  "input_type": "img",
+  "media_url": [
+    "assets/stimuli/7_3_3.gif"
+  ],
+  "commentary": "",
+  "queries": []
   }
   

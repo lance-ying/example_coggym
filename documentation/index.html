@@ -83,9 +83,11 @@
         </ul>
 
         <h2>1.2. Directory Structure</h2>
-        <p>Each dataset must be contained within a single directory, named according to the convention below. A study may have multiple experiments, each in its own subdirectory (exp1, exp2, etc.). If there is only one experiment, it should still be placed in an <code>exp1</code> subdirectory.</p>
+        <p>Each dataset must be contained within a single directory, named according to the convention below. A study may have multiple experiments, each in its own subdirectory (exp1, exp2, etc.). If there is only one experiment, it should still be placed in an <code>exp1</code> subdirectory. Every study directory must include a top-level <code>README.md</code>, and every experiment subdirectory must include its own <code>README.md</code> summarizing the experiment-specific contents.</p>
         <pre><code>[DatasetName]/
+├── README.md
 ├── exp1/  (or exp1, exp2, exp3, etc. if multiple experiments)
+│   ├── README.md
 │   ├── stimuli.jsonl
 │   ├── config.json
 │   ├── instruction.jsonl
@@ -96,6 +98,7 @@
 │       ├── stimulus_video_01.mp4
 │       └── ...
 ├── exp2/  (optional, if study has multiple experiments)
+│   ├── README.md
 │   ├── stimuli.jsonl
 │   ├── config.json
 │   └── ...
@@ -111,18 +114,7 @@
         <p><strong>Examples:</strong></p>
         <ul>
             <li><strong>Paper:</strong> "Understanding Epistemic Language with a Language-augmented Bayesian Theory of Mind" (Ying et al., 2025)</li>
-            <li><strong>Folder Structure:</strong>
-                <pre><code>Ying2025Understanding/
-├── exp1/
-│   ├── stimuli.jsonl
-│   ├── config.json
-│   ├── instruction.jsonl
-│   └── ...
-└── exp2/
-    ├── stimuli.jsonl
-    ├── config.json
-    └── ...</code></pre>
-            </li>
+            
         </ul>
         <ul>
             <li><strong>Paper:</strong> "A Minimal Theory of Mind for Social Agents" (Rabinowitz et al., 2018)</li>
@@ -136,6 +128,7 @@
             <li><a href="config_schema.html"><code>config.json</code></a>: Core configuration, metadata, and experiment flow for the experiment.</li>
             <li><a href="instruction_schema.html"><code>instruction.jsonl</code></a>: Defines the pre-experiment instruction and quiz steps.</li>
             <li><a href="human_data_schema.html"><code>human_data_ind.json</code> / <code>human_data_mean.json</code></a>: Anonymized human subject data.</li>
+            <li><code>README.md</code>: Required narrative summary describing the experiment, linking to relevant documentation, and noting unique considerations.</li>
             <li><code>assets/</code> (Optional Folder): This folder is required if and only if the experiment uses non-textual stimuli (e.g., images, audio, video).</li>
         </ul>
 
