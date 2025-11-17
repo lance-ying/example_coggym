@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appendix - Trial Schema</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; margin-bottom: 1.5rem; }
+        th, td { border: 1px solid #e2e8f0; padding: 0.75rem 1rem; text-align: left; vertical-align: top; }
+        th { background-color: #f8fafc; font-weight: 600; }
+        pre { background-color: #f1f5f9; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; margin-top: 1rem; margin-bottom: 1rem; }
+        code { font-family: 'Courier New', Courier, monospace; }
+        code:not(pre code) { background-color: #f1f5f9; padding: 0.2rem 0.4rem; border-radius: 0.25rem; font-size: 0.9em; }
+        .prose h1 { font-size: 2.25rem; font-weight: 700; margin-bottom: 1.5rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem; }
+        .prose h2 { font-size: 1.875rem; font-weight: 600; margin-top: 2.5rem; margin-bottom: 1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem; }
+        .prose h3 { font-size: 1.5rem; font-weight: 600; margin-top: 2rem; margin-bottom: 1rem; }
+        .prose h4 { font-size: 1.25rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+        .prose p, .prose ul { margin-bottom: 1.25rem; line-height: 1.75; }
+        .prose a { color: #2563eb; text-decoration: none; font-weight: 500; }
+        .prose a:hover { text-decoration: underline; }
+        .sidebar { width: 250px; position: fixed; left: 0; top: 0; height: 100vh; overflow-y: auto; background-color: #1f2937; }
+        .content-wrapper { margin-left: 250px; }
+        .nav-link { display: block; padding: 0.75rem 1.5rem; color: #d1d5db; text-decoration: none; border-left: 3px solid transparent; }
+        .nav-link:hover { background-color: #374151; color: white; }
+        .nav-link.active { background-color: #374151; color: white; border-left-color: #3b82f6; font-weight: 600; }
+        .nav-section { position: relative; }
+        .nav-section-header { display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
+        .nav-section-header:hover { background-color: #374151; }
+        .nav-expand-icon { transition: transform 0.2s; font-size: 0.75rem; margin-right: 0.5rem; }
+        .nav-expand-icon.expanded { transform: rotate(90deg); }
+        .nav-subsections { display: none; background-color: #111827; }
+        .nav-subsections.expanded { display: block; }
+        .nav-subsection-link { display: block; padding: 0.5rem 1.5rem 0.5rem 2.5rem; color: #9ca3af; text-decoration: none; font-size: 0.875rem; border-left: 3px solid transparent; }
+        .nav-subsection-link:hover { background-color: #374151; color: white; }
+        .nav-subsection-link.active { background-color: #374151; color: white; border-left-color: #3b82f6; }
+        .nav-subsection { position: relative; }
+        .nav-subsection-header { display: flex; align-items: center; justify-content: space-between; cursor: pointer; padding: 0.5rem 1.5rem 0.5rem 2.5rem; color: #9ca3af; font-size: 0.875rem; border-left: 3px solid transparent; }
+        .nav-subsection-header:hover { background-color: #374151; color: white; }
+        .nav-subsection-header.active { background-color: #374151; color: white; border-left-color: #3b82f6; }
+        .nav-subsection-subsections { display: none; background-color: #0f172a; }
+        .nav-subsection-subsections.expanded { display: block; }
+        .nav-subsection-subsections .nav-subsection-link { padding-left: 3.5rem; }
+        @media (max-width: 768px) {
+            .sidebar { width: 100%; height: auto; position: relative; }
+            .content-wrapper { margin-left: 0; }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 antialiased">
+
+    <nav class="sidebar">
+        <div class="py-4">
+            <a href="index.html" class="nav-link">1. Overview</a>
+            <a href="config_schema.html" class="nav-link">2. Config Schema (config.json)</a>
+            <a href="trial_schema.html" class="nav-link">3. Trial Schema (trial.jsonl)</a>
+            <a href="instruction_schema.html" class="nav-link">4. Instruction Schema</a>
+            <a href="human_data_schema.html" class="nav-link">5. Human Data Schema</a>
+            <a href="appendix.html" class="nav-link active">Appendix</a>
+        </div>
+    </nav>
+    <script>
+        function toggleNavSection(header) {
+            const section = header.parentElement;
+            const subsections = section.querySelector('.nav-subsections, .nav-subsection-subsections');
+            const icon = header.querySelector('.nav-expand-icon');
+            
+            if (subsections && subsections.classList.contains('expanded')) {
+                subsections.classList.remove('expanded');
+                if (icon) icon.classList.remove('expanded');
+            } else if (subsections) {
+                subsections.classList.add('expanded');
+                if (icon) icon.classList.add('expanded');
+            }
+        }
+        
+        // Highlight active subsection on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const hash = window.location.hash;
+            if (hash) {
+                const target = document.querySelector(hash);
+                if (target) {
+                    const subsectionLink = document.querySelector(`a[href="${hash}"]`);
+                    if (subsectionLink) {
+                        subsectionLink.classList.add('active');
+                    }
+                }
+            }
+        });
+    </script>
+
+    <div class="content-wrapper">
+    <div class="container mx-auto max-w-4xl p-6 md:p-12 bg-white shadow-lg rounded-lg my-12 prose prose-lg">
+
+        <h1>Appendix - Trial Schema</h1>
+        <p>This appendix contains additional examples and detailed specifications for the Trial Schema.</p>
+
+        <h2 id="multiple-media-urls">A.1. Example with Multiple Media URLs and Dimensions</h2>
+        <p>When multiple media URLs are provided, they are rendered side by side. You can specify dimensions for each using the <code>dimension</code> array:</p>
+        <pre><code>{
+  "stimuli_id": "trial_comparison_01",
+  "stimuli": [
+    {
+      "input_type": "img",
+      "title": "Compare the Two Scenarios",
+      "fontsize": 20,
+      "media_url": [
+        "assets/scenario_a.png",
+        "assets/scenario_b.png"
+      ],
+      "dimension": [
+        { "width": 400, "height": 300 },
+        { "width": 400, "height": 300 }
+      ]
+    }
+  ],
+  "queries": [
+    {
+      "prompt": "Which scenario shows the agent's goal more clearly?",
+      "type": "multi-choice",
+      "tag": "scenario_comparison",
+      "option": ["Scenario A", "Scenario B", "Equally clear"],
+      "required": true
+    }
+  ]
+}</code></pre>
+        <p>In this example, two images are displayed side by side, each with dimensions of 400x300 pixels. If <code>dimension</code> is not specified but <code>width</code> and <code>height</code> are provided, all media URLs will use those same dimensions.</p>
+
+        <h2 id="slider-config">A.2. Slider Config (<code>slider_config</code>)</h2>
+        <p>This object is required for <code>single-slider</code> and <code>multi-slider</code> types.</p>
+        <div class="overflow-x-auto">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>min</code></td>
+                        <td>Number</td>
+                        <td>The minimum value of the slider (e.g., 0).</td>
+                    </tr>
+                    <tr>
+                        <td><code>max</code></td>
+                        <td>Number</td>
+                        <td>The maximum value of the slider (e.g., 100).</td>
+                    </tr>
+                    <tr>
+                        <td><code>default_value</code></td>
+                        <td>Number</td>
+                        <td>The value where the slider handle starts.</td>
+                    </tr>
+                    <tr>
+                        <td><code>labels</code></td>
+                        <td>Array of Objects</td>
+                        <td>An array of label objects to display under the slider. See table below.</td>
+                    </tr>
+                    <tr>
+                        <td><code>show_label_values</code></td>
+                        <td>Boolean</td>
+                        <td>If <code>true</code>, displays the numeric value (from <code>value</code>) alongside the text (from <code>label</code>).</td>
+                    </tr>
+                    <tr>
+                        <td><code>num_clicks</code></td>
+                        <td>Number (optional)</td>
+                        <td>Default is <code>1</code>. If set to a value greater than 1, the slider becomes a multi-click slider, allowing the user to click the slider N times. Each click records a separate value. Useful for collecting multiple ratings or repeated measurements on the same slider.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p class="prose my-4">Each object in the <code>labels</code> array has the following structure:</p>
+        <div class="overflow-x-auto">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>value</code></td>
+                        <td>Number</td>
+                        <td>The numeric position on the slider where this label should appear.</td>
+                    </tr>
+                    <tr>
+                        <td><code>label</code></td>
+                        <td>String</td>
+                        <td>The text to display at that position (e.g., "Neutral", "Strongly Agree").</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2 id="stimulus-optional-fields">A.3. Optional Stimulus Fields</h2>
+        <p>The following fields are optional for each stimulus object in the <code>stimuli</code> array:</p>
+        <div class="overflow-x-auto">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Field</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>title</code></td>
+                        <td>String</td>
+                        <td>A heading displayed before the stimulus.</td>
+                    </tr>
+                    <tr>
+                        <td><code>fontsize</code></td>
+                        <td>Number</td>
+                        <td>Font size for the title (in pixels).</td>
+                    </tr>
+                    <tr>
+                        <td><code>width</code></td>
+                        <td>Number</td>
+                        <td>Width of the media in pixels (applies to all media URLs if <code>dimension</code> is not specified).</td>
+                    </tr>
+                    <tr>
+                        <td><code>height</code></td>
+                        <td>Number</td>
+                        <td>Height of the media in pixels (applies to all media URLs if <code>dimension</code> is not specified).</td>
+                    </tr>
+                    <tr>
+                        <td><code>dimension</code></td>
+                        <td>Array of Objects</td>
+                        <td>When multiple <code>media_url</code>s are provided, specify dimensions for each. Each object has <code>width</code> and <code>height</code> (Numbers). The array length must match the <code>media_url</code> array length.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+    </div>
+
+</body>
+</html>
+

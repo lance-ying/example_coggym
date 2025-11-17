@@ -27,6 +27,23 @@
         .nav-link { display: block; padding: 0.75rem 1.5rem; color: #d1d5db; text-decoration: none; border-left: 3px solid transparent; }
         .nav-link:hover { background-color: #374151; color: white; }
         .nav-link.active { background-color: #374151; color: white; border-left-color: #3b82f6; font-weight: 600; }
+        .nav-section { position: relative; }
+        .nav-section-header { display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
+        .nav-section-header:hover { background-color: #374151; }
+        .nav-expand-icon { transition: transform 0.2s; font-size: 0.75rem; margin-right: 0.5rem; }
+        .nav-expand-icon.expanded { transform: rotate(90deg); }
+        .nav-subsections { display: none; background-color: #111827; }
+        .nav-subsections.expanded { display: block; }
+        .nav-subsection-link { display: block; padding: 0.5rem 1.5rem 0.5rem 2.5rem; color: #9ca3af; text-decoration: none; font-size: 0.875rem; border-left: 3px solid transparent; }
+        .nav-subsection-link:hover { background-color: #374151; color: white; }
+        .nav-subsection-link.active { background-color: #374151; color: white; border-left-color: #3b82f6; }
+        .nav-subsection { position: relative; }
+        .nav-subsection-header { display: flex; align-items: center; justify-content: space-between; cursor: pointer; padding: 0.5rem 1.5rem 0.5rem 2.5rem; color: #9ca3af; font-size: 0.875rem; border-left: 3px solid transparent; }
+        .nav-subsection-header:hover { background-color: #374151; color: white; }
+        .nav-subsection-header.active { background-color: #374151; color: white; border-left-color: #3b82f6; }
+        .nav-subsection-subsections { display: none; background-color: #0f172a; }
+        .nav-subsection-subsections.expanded { display: block; }
+        .nav-subsection-subsections .nav-subsection-link { padding-left: 3.5rem; }
         @media (max-width: 768px) {
             .sidebar { width: 100%; height: auto; position: relative; }
             .content-wrapper { margin-left: 0; }
@@ -37,13 +54,86 @@
 
     <nav class="sidebar">
         <div class="py-4">
-            <a href="overview.html" class="nav-link">1. Overview</a>
-            <a href="config_schema.html" class="nav-link active">2. Config Schema (config.json)</a>
-            <a href="trial_schema.html" class="nav-link">3. Trial Schema (stimuli.jsonl)</a>
+            <a href="index.html" class="nav-link">1. Overview</a>
+            <div class="nav-section">
+                <div class="nav-section-header nav-link active" onclick="toggleNavSection(this)">
+                    <span>2. Config Schema (config.json)</span>
+                    <span class="nav-expand-icon expanded">▶</span>
+                </div>
+                <div class="nav-subsections expanded">
+                    <a href="#metadata" class="nav-subsection-link">2.1. Metadata</a>
+                    <div class="nav-subsection">
+                        <div class="nav-subsection-header" onclick="toggleNavSection(this)">
+                            <a href="#experiment-flow" style="flex: 1; text-decoration: none; color: inherit;">2.2. Experiment Flow</a>
+                            <span class="nav-expand-icon">▶</span>
+                        </div>
+                        <div class="nav-subsection-subsections">
+                            <a href="#experiment-flow-example" class="nav-subsection-link">2.2.1. Example</a>
+                        </div>
+                    </div>
+                    <a href="#full-example" class="nav-subsection-link">2.3. Full Example</a>
+                </div>
+            </div>
+            <a href="trial_schema.html" class="nav-link">3. Trial Schema (trial.jsonl)</a>
             <a href="instruction_schema.html" class="nav-link">4. Instruction Schema</a>
             <a href="human_data_schema.html" class="nav-link">5. Human Data Schema</a>
+            <a href="appendix.html" class="nav-link">Appendix</a>
         </div>
     </nav>
+    <script>
+        function toggleNavSection(header) {
+            const section = header.parentElement;
+            const subsections = section.querySelector('.nav-subsections, .nav-subsection-subsections');
+            const icon = header.querySelector('.nav-expand-icon');
+            
+            if (subsections && subsections.classList.contains('expanded')) {
+                subsections.classList.remove('expanded');
+                if (icon) icon.classList.remove('expanded');
+            } else if (subsections) {
+                subsections.classList.add('expanded');
+                if (icon) icon.classList.add('expanded');
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const hash = window.location.hash;
+            if (hash) {
+                const target = document.querySelector(hash);
+                if (target) {
+                    const subsectionLink = document.querySelector(`a[href="${hash}"]`);
+                    if (subsectionLink) {
+                        subsectionLink.classList.add('active');
+                        // Expand all parent sections if collapsed
+                        let current = subsectionLink;
+                        while (current) {
+                            const subsection = current.closest('.nav-subsection');
+                            const section = current.closest('.nav-section');
+                            
+                            if (subsection) {
+                                const subsections = subsection.querySelector('.nav-subsection-subsections');
+                                const icon = subsection.querySelector('.nav-expand-icon');
+                                if (subsections && !subsections.classList.contains('expanded')) {
+                                    subsections.classList.add('expanded');
+                                    if (icon) icon.classList.add('expanded');
+                                }
+                                current = subsection;
+                            } else if (section) {
+                                const subsections = section.querySelector('.nav-subsections');
+                                const icon = section.querySelector('.nav-expand-icon');
+                                if (subsections && !subsections.classList.contains('expanded')) {
+                                    subsections.classList.add('expanded');
+                                    if (icon) icon.classList.add('expanded');
+                                }
+                                break;
+                            } else {
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 
     <div class="content-wrapper">
     <div class="container mx-auto max-w-4xl p-6 md:p-12 bg-white shadow-lg rounded-lg my-12 prose prose-lg">
@@ -51,7 +141,7 @@
         <h1>2. File Specification: Config Schema (<code>config.json</code>)</h1>
         <p>The <code>config.json</code> file provides high-level metadata about the experiment and defines the overall structure (or "flow") of the trials presented to the participant.</p>
 
-        <section>
+        <section id="metadata">
             <h2>2.1. Metadata</h2>
             <p>These top-level keys describe the study and are used for dataset indexing and citation.</p>
             <div class="overflow-x-auto">
@@ -97,25 +187,15 @@
                         <tr>
                             <td><code>stimuli_count</code></td>
                             <td>Integer</td>
-                            <td>Total number of unique stimuli/trials defined for this experiment (i.e., the number of entries in <code>stimuli.jsonl</code> that are referenced by <code>config.json</code>).</td>
-                        </tr>
-                        <tr>
-                            <td><code>judgment_count</code></td>
-                            <td>Integer</td>
-                            <td>Total number of human ratings collected for the experiment (sum of all response list lengths in <code>human_data_ind.json</code>).</td>
-                        </tr>
-                        <tr>
-                            <td><code>participants_info</code></td>
-                            <td>Dictionary</td>
-                            <td>Required summary describing the participant demographics. Must include <code>count</code> (Integer total participants), <code>age</code> (Number; mean age or age range description), and <code>gender</code> (Dictionary with category counts). Additional fields (e.g., education, geography) may be included as relevant.</td>
+                            <td>Total number of unique stimuli/trials defined for this experiment (i.e., the number of entries in <code>trial.jsonl</code> that are referenced by <code>config.json</code>).</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <p>The <code>stimuli_count</code> and <code>judgment_count</code> fields provide quick summaries of dataset size and annotation coverage. The <code>participants_info</code> dictionary is required to document participant demographics; populate the mandatory keys and extend with additional demographics as appropriate (e.g., education level, geographic region).</p>
+            <p>The <code>stimuli_count</code> field provides a quick summary of dataset size. Participant demographics (<code>participants_info</code>) and the total number of ratings (<code>judgment_count</code>) are now specified in the Human Data files; see the Human Data Schema.</p>
         </section>
 
-        <section>
+        <section id="experiment-flow">
             <h2>2.2. Experiment Flow (<code>experimentFlow</code>)</h2>
             <p>To control the order and grouping of multiple trials, an <code>experimentFlow</code> array is used. Each entry in this array is a dictionary describing a full flow definition (e.g., for a specific experimental condition). The list should enumerate every condition included in the experiment. If conditions differ so substantially that they require separate instructions, assets, or config logic, consider splitting them into separate experiment folders instead. Make this decision on a case-by-case basis.</p>
             <div class="overflow-x-auto">
@@ -131,7 +211,7 @@
                         <tr>
                             <td><code>blocks</code></td>
                             <td>Array of Arrays of Strings</td>
-                            <td>A nested array. Each inner array is a "block" of trials. Each string is a <code>stimuli_id</code> from <code>stimuli.jsonl</code>.</td>
+                            <td>A nested array. Each inner array is a "block" of trials. Each string is a <code>stimuli_id</code> from <code>trial.jsonl</code>.</td>
                         </tr>
                         <tr>
                             <td><code>block_randomization</code></td>
@@ -152,7 +232,7 @@
                 </table>
             </div>
 
-            <h3>2.2.1. Example <code>experimentFlow</code></h3>
+            <h3 id="experiment-flow-example">2.2.1. Example <code>experimentFlow</code></h3>
             <pre><code>"experimentFlow": [
   {
     "experimental_condition": "condition_1",
@@ -179,9 +259,9 @@
             </ul>
         </section>
 
-        <section>
+        <section id="full-example">
             <h2>2.3. Full <code>config.json</code> Example</h2>
-            <p>Here is what a complete <code>config.json</code> file looks like, combining the metadata and the experiment flow. The <code>stimuli_id</code> strings (e.g., <code>"trial_1_1"</code>) in the <code>blocks</code> array refer to the trial objects defined in your <a href="trial_schema.html">Trial Schema (<code>stimuli.jsonl</code>)</a> file.</p>
+            <p>Here is what a complete <code>config.json</code> file looks like, combining the metadata and the experiment flow. The <code>stimuli_id</code> strings (e.g., <code>"trial_1_1"</code>) in the <code>blocks</code> array refer to the trial objects defined in your <a href="trial_schema.html">Trial Schema (<code>trial.jsonl</code>)</a> file.</p>
             <pre><code>{
   "experimentName": "Epistemic Language Understanding",
   "description": "Participants observe short animations and answer questions about the agent's goals and beliefs.",
@@ -199,13 +279,6 @@
     "John Smith"
   ],
   "stimuli_count": 48,
-  "judgment_count": 14400,
-  "participants_info": {
-    "count": 120,
-    "age": 34.5,
-    "gender": { "male": 52, "female": 66, "other": 2 },
-    "education": { "bachelor": 58, "graduate": 42, "other": 20 }
-  },
   "experimentFlow": [
     {
       "blocks": [

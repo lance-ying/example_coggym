@@ -7,7 +7,7 @@
 ## Files
 - ``overview.html``: high-level description of the experiment dataset, file relationships, and workflow.
 - ``config_schema.html``: specification for ``config.json`` including metadata fields and `experimentFlow`.
-- ``trial_schema.html``: schema for trial definitions found in ``stimuli.jsonl`` files.
+- ``trial_schema.html``: schema for trial definitions found in ``trial.jsonl`` files.
 - ``instruction_schema.html``: structure and formatting rules for participant instruction content.
 - ``human_data_schema.html``: layout for raw and aggregated human response data exports.
 

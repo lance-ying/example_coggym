@@ -66,6 +66,23 @@
         .nav-link { display: block; padding: 0.75rem 1.5rem; color: #d1d5db; text-decoration: none; border-left: 3px solid transparent; }
         .nav-link:hover { background-color: #374151; color: white; }
         .nav-link.active { background-color: #374151; color: white; border-left-color: #3b82f6; font-weight: 600; }
+        .nav-section { position: relative; }
+        .nav-section-header { display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
+        .nav-section-header:hover { background-color: #374151; }
+        .nav-expand-icon { transition: transform 0.2s; font-size: 0.75rem; margin-right: 0.5rem; }
+        .nav-expand-icon.expanded { transform: rotate(90deg); }
+        .nav-subsections { display: none; background-color: #111827; }
+        .nav-subsections.expanded { display: block; }
+        .nav-subsection-link { display: block; padding: 0.5rem 1.5rem 0.5rem 2.5rem; color: #9ca3af; text-decoration: none; font-size: 0.875rem; border-left: 3px solid transparent; }
+        .nav-subsection-link:hover { background-color: #374151; color: white; }
+        .nav-subsection-link.active { background-color: #374151; color: white; border-left-color: #3b82f6; }
+        .nav-subsection { position: relative; }
+        .nav-subsection-header { display: flex; align-items: center; justify-content: space-between; cursor: pointer; padding: 0.5rem 1.5rem 0.5rem 2.5rem; color: #9ca3af; font-size: 0.875rem; border-left: 3px solid transparent; }
+        .nav-subsection-header:hover { background-color: #374151; color: white; }
+        .nav-subsection-header.active { background-color: #374151; color: white; border-left-color: #3b82f6; }
+        .nav-subsection-subsections { display: none; background-color: #0f172a; }
+        .nav-subsection-subsections.expanded { display: block; }
+        .nav-subsection-subsections .nav-subsection-link { padding-left: 3.5rem; }
         @media (max-width: 768px) {
             .sidebar { width: 100%; height: auto; position: relative; }
             .content-wrapper { margin-left: 0; }
@@ -76,13 +93,81 @@
 
     <nav class="sidebar">
         <div class="py-4">
-            <a href="overview.html" class="nav-link">1. Overview</a>
+            <a href="index.html" class="nav-link">1. Overview</a>
             <a href="config_schema.html" class="nav-link">2. Config Schema (config.json)</a>
-            <a href="trial_schema.html" class="nav-link">3. Trial Schema (stimuli.jsonl)</a>
-            <a href="instruction_schema.html" class="nav-link active">4. Instruction Schema</a>
+            <a href="trial_schema.html" class="nav-link">3. Trial Schema (trial.jsonl)</a>
+            <div class="nav-section">
+                <div class="nav-section-header nav-link active" onclick="toggleNavSection(this)">
+                    <span>4. Instruction Schema</span>
+                    <span class="nav-expand-icon expanded">▶</span>
+                </div>
+                <div class="nav-subsections expanded">
+                    <a href="#top-level-structure" class="nav-subsection-link">4.1. Top-Level Structure</a>
+                    <a href="#instruction-module" class="nav-subsection-link">4.2. Module: instruction</a>
+                    <a href="#test-trial-module" class="nav-subsection-link">4.3. Module: test_trial</a>
+                    <a href="#comprehension-quiz-module" class="nav-subsection-link">4.4. Module: comprehension_quiz</a>
+                    <a href="#full-example" class="nav-subsection-link">4.5. Full Example</a>
+                    <a href="#live-demo" class="nav-subsection-link">4.6. Live Demo</a>
+                </div>
+            </div>
             <a href="human_data_schema.html" class="nav-link">5. Human Data Schema</a>
+            <a href="appendix.html" class="nav-link">Appendix</a>
         </div>
     </nav>
+    <script>
+        function toggleNavSection(header) {
+            const section = header.parentElement;
+            const subsections = section.querySelector('.nav-subsections, .nav-subsection-subsections');
+            const icon = header.querySelector('.nav-expand-icon');
+            
+            if (subsections && subsections.classList.contains('expanded')) {
+                subsections.classList.remove('expanded');
+                if (icon) icon.classList.remove('expanded');
+            } else if (subsections) {
+                subsections.classList.add('expanded');
+                if (icon) icon.classList.add('expanded');
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const hash = window.location.hash;
+            if (hash) {
+                const target = document.querySelector(hash);
+                if (target) {
+                    const subsectionLink = document.querySelector(`a[href="${hash}"]`);
+                    if (subsectionLink) {
+                        subsectionLink.classList.add('active');
+                        // Expand all parent sections if collapsed
+                        let current = subsectionLink;
+                        while (current) {
+                            const subsection = current.closest('.nav-subsection');
+                            const section = current.closest('.nav-section');
+                            
+                            if (subsection) {
+                                const subsections = subsection.querySelector('.nav-subsection-subsections');
+                                const icon = subsection.querySelector('.nav-expand-icon');
+                                if (subsections && !subsections.classList.contains('expanded')) {
+                                    subsections.classList.add('expanded');
+                                    if (icon) icon.classList.add('expanded');
+                                }
+                                current = subsection;
+                            } else if (section) {
+                                const subsections = section.querySelector('.nav-subsections');
+                                const icon = section.querySelector('.nav-expand-icon');
+                                if (subsections && !subsections.classList.contains('expanded')) {
+                                    subsections.classList.add('expanded');
+                                    if (icon) icon.classList.add('expanded');
+                                }
+                                break;
+                            } else {
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 
     <div class="content-wrapper">
     <div class="container mx-auto max-w-4xl p-6 md:p-12 bg-white shadow-lg rounded-lg my-12 prose prose-lg">
@@ -90,7 +175,7 @@
         <h1>4. File Specification: Instruction Schema (<code>instruction.jsonl</code>)</h1>
         <p>The <code>instruction.jsonl</code> file defines the sequence of screens (instructions, test trials, quizzes) that a participant sees before the main experiment begins. Each line contains one JSON object representing a "Module" object, which are presented in order.</p>
 
-        <section>
+        <section id="top-level-structure">
             <h2>4.1. Top-Level Structure</h2>
             <p>The file contains one "Module" object per line. Each Module object must have a <code>type</code> field, which determines the other required fields.</p>
             <pre><code>{ "type": "instruction", ... }
@@ -98,7 +183,7 @@
 { "type": "comprehension_quiz", ... }</code></pre>
         </section>
 
-        <section>
+        <section id="instruction-module">
             <h2>4.2. Module Type: <code>instruction</code></h2>
             <p>This is the most common Module. It displays a page of text and/or images to the participant.</p>
             <table>
@@ -123,15 +208,15 @@
                     <tr>
                         <td><code>media_url</code></td>
                         <td>Array of Strings</td>
-                        <td>(Optional) An array of image/video paths to display, identical to the <code>media_url</code> in <code>stimuli.jsonl</code>.</td>
+                        <td>(Optional) An array of image/video paths to display, identical to the <code>media_url</code> in <code>trial.jsonl</code>.</td>
                     </tr>
                 </tbody>
             </table>
         </section>
 
-        <section>
+        <section id="test-trial-module">
             <h2>4.3. Module Type: <code>test_trial</code></h2>
-            <p>This Module displays a fully functional trial (a stimulus and queries) from <code>stimuli.jsonl</code>. This allows participants to practice the task.</p>
+            <p>This Module displays a fully functional trial (a stimulus and queries) from <code>trial.jsonl</code>. This allows participants to practice the task. <strong>Important:</strong> A <code>test_trial</code> should feature an identical looking trial that participants would encounter in the main experiment, allowing them to familiarize themselves with the interface and task format before proceeding.</p>
             <table>
                 <thead>
                     <tr>
@@ -149,7 +234,7 @@
                     <tr>
                         <td><code>stimuli_id</code></td>
                         <td>String</td>
-                        <td>The <code>stimuli_id</code> of the trial from <code>stimuli.jsonl</code> to display.</td>
+                        <td>The <code>stimuli_id</code> of the trial from <code>trial.jsonl</code> to display.</td>
                     </tr>
                     <tr>
                         <td><code>feedback</code></td>
@@ -160,9 +245,9 @@
             </table>
         </section>
 
-        <section>
+        <section id="comprehension-quiz-module">
             <h2>4.4. Module Type: <code>comprehension_quiz</code></h2>
-            <p>This Module presents one or more questions (identical to the <a href="trial_schema.html#queries">Query Object</a> format) to check the participant's understanding. It provides immediate feedback.</p>
+            <p>This Module presents one or more questions (identical to the <a href="trial_schema.html#queries">Query Object</a> format) to check the participant's understanding. It provides immediate feedback. <strong>Important:</strong> Unlike <code>test_trial</code>, a <code>comprehension_quiz</code> focuses on high-level questions about the experiment itself (e.g., "What is your main task?", "How should you respond?"), rather than presenting actual experimental stimuli.</p>
             <table>
                 <thead>
                     <tr>
@@ -192,7 +277,7 @@
             <p><strong>Note on Quiz Queries:</strong> Queries within a <code>comprehension_quiz</code> (usually <code>multi-choice</code>) <strong>must</strong> include an <code>answer</code> field to provide real-time feedback to the user. The <code>answer</code> field is defined in the <a href="trial_schema.html#queries">Trial Schema (Section 3.2)</a>.</p>
         </section>
 
-        <section>
+        <section id="full-example">
             <h2>4.5. Full <code>instruction.jsonl</code> Example</h2>
             <p>This example shows a sequence containing a welcome page, a second instruction page with an image, a test trial, and a final comprehension quiz.</p>
             <pre><code>{
@@ -251,7 +336,7 @@ If more than one gem seems likely, you can select all likely gems. Remember that
 }</code></pre>
         </section>
         
-        <section>
+        <section id="live-demo">
             <h2>4.6. Live Demo of Instruction Sequence</h2>
             <p>Below is a simulation of how the sequence from the example JSON above would be rendered to the participant, one Module at a time. <strong>Click the options in Module 4 to see the feedback.</strong></p>
 

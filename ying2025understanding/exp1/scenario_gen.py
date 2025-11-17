@@ -172,11 +172,14 @@ STIMULI_SETS = [
 
 TRIAL_TEMPLATE = """{
   "stimuli_id": "STIMULUS_ID",
-  "input_type": "img",
-  "media_url": [
-    "ASSETS_URL"
+  "stimuli": [
+    {
+      "input_type": "img",
+      "media_url": [
+        "ASSETS_URL"
+      ]
+    }
   ],
-  "commentary": "",
   "queries": QUERY_TEMPLATE
   }
   """
@@ -234,6 +237,6 @@ for stimulus_set in STIMULI_SETS:
           scenario = scenario.replace("QUERY_TEMPLATE", "[]")
           all_scenarios.append(scenario)
 
-with open("stimuli.jsonl", "w") as f:
+with open("trial.jsonl", "w") as f:
     for scenario in all_scenarios:
         f.write(scenario + "\n")

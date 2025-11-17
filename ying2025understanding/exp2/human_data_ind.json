@@ -1,4 +1,10 @@
 {
+  "participants_info": {
+    "count": 94,
+    "age": 35.7,
+    "gender": { "male": 27, "female": 67, "other": 0 }
+  },
+  "judgment_count": 13542,
   "1_1_1": {
     "goal_probs_1": [
       0.0,

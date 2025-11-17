@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3. Trial Schema (stimuli.jsonl)</title>
+    <title>3. Trial Schema (trial.jsonl)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
@@ -13,6 +13,7 @@
         th { background-color: #f8fafc; font-weight: 600; }
         pre { background-color: #f1f5f9; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; margin-top: 1rem; margin-bottom: 1rem; }
         code { font-family: 'Courier New', Courier, monospace; }
+        code:not(pre code) { background-color: #f1f5f9; padding: 0.2rem 0.4rem; border-radius: 0.25rem; font-size: 0.9em; }
         input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 8px; background: #d1d5db; outline: none; opacity: 0.7; transition: opacity .2s; border-radius: 4px; }
         input[type="range"]:hover { opacity: 1; }
         input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #3b82f6; cursor: pointer; margin-top: -6px; border: 2px solid #fff; box-shadow: 0 0 0 1px rgba(0,0,0,0.1); }
@@ -28,11 +29,35 @@
         .prose a { color: #2563eb; text-decoration: none; font-weight: 500; }
         .prose a:hover { text-decoration: underline; }
         .required-asterisk { color: #dc2626; }
+        .demo-panel-layout { display: flex; gap: 1.5rem; align-items: flex-start; }
+        .demo-panel-left { flex: 0 0 35%; max-width: 400px; }
+        .demo-panel-right { flex: 1; min-width: 0; }
+        @media (max-width: 768px) {
+            .demo-panel-layout { flex-direction: column; }
+            .demo-panel-left { width: 100%; }
+        }
         .sidebar { width: 250px; position: fixed; left: 0; top: 0; height: 100vh; overflow-y: auto; background-color: #1f2937; }
         .content-wrapper { margin-left: 250px; }
         .nav-link { display: block; padding: 0.75rem 1.5rem; color: #d1d5db; text-decoration: none; border-left: 3px solid transparent; }
         .nav-link:hover { background-color: #374151; color: white; }
         .nav-link.active { background-color: #374151; color: white; border-left-color: #3b82f6; font-weight: 600; }
+        .nav-section { position: relative; }
+        .nav-section-header { display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
+        .nav-section-header:hover { background-color: #374151; }
+        .nav-expand-icon { transition: transform 0.2s; font-size: 0.75rem; margin-right: 0.5rem; }
+        .nav-expand-icon.expanded { transform: rotate(90deg); }
+        .nav-subsections { display: none; background-color: #111827; }
+        .nav-subsections.expanded { display: block; }
+        .nav-subsection-link { display: block; padding: 0.5rem 1.5rem 0.5rem 2.5rem; color: #9ca3af; text-decoration: none; font-size: 0.875rem; border-left: 3px solid transparent; }
+        .nav-subsection-link:hover { background-color: #374151; color: white; }
+        .nav-subsection-link.active { background-color: #374151; color: white; border-left-color: #3b82f6; }
+        .nav-subsection { position: relative; }
+        .nav-subsection-header { display: flex; align-items: center; justify-content: space-between; cursor: pointer; padding: 0.5rem 1.5rem 0.5rem 2.5rem; color: #9ca3af; font-size: 0.875rem; border-left: 3px solid transparent; }
+        .nav-subsection-header:hover { background-color: #374151; color: white; }
+        .nav-subsection-header.active { background-color: #374151; color: white; border-left-color: #3b82f6; }
+        .nav-subsection-subsections { display: none; background-color: #0f172a; }
+        .nav-subsection-subsections.expanded { display: block; }
+        .nav-subsection-subsections .nav-subsection-link { padding-left: 3.5rem; }
         @media (max-width: 768px) {
             .sidebar { width: 100%; height: auto; position: relative; }
             .content-wrapper { margin-left: 0; }
@@ -43,20 +68,111 @@
 
     <nav class="sidebar">
         <div class="py-4">
-            <a href="overview.html" class="nav-link">1. Overview</a>
+            <a href="index.html" class="nav-link">1. Overview</a>
             <a href="config_schema.html" class="nav-link">2. Config Schema (config.json)</a>
-            <a href="trial_schema.html" class="nav-link active">3. Trial Schema (stimuli.jsonl)</a>
+            <div class="nav-section">
+                <div class="nav-section-header nav-link active" onclick="toggleNavSection(this)">
+                    <span>3. Trial Schema (trial.jsonl)</span>
+                    <span class="nav-expand-icon expanded">▶</span>
+                </div>
+                <div class="nav-subsections expanded">
+                    <a href="#top-level-fields" class="nav-subsection-link">3.1. Top-Level Fields</a>
+                    <div class="nav-subsection">
+                        <div class="nav-subsection-header" onclick="toggleNavSection(this)">
+                            <a href="#queries" style="flex: 1; text-decoration: none; color: inherit;">3.2. Query Types and Arguments</a>
+                            <span class="nav-expand-icon">▶</span>
+                        </div>
+                        <div class="nav-subsection-subsections">
+                            <a href="#query-text" class="nav-subsection-link">3.2.1. text-instruction</a>
+                            <a href="#query-mc" class="nav-subsection-link">3.2.2. multiple-choice</a>
+                            <a href="#query-mc-single" class="nav-subsection-link">3.2.2.1. single-select</a>
+                            <a href="#query-mc-multi" class="nav-subsection-link">3.2.2.2. multi-select</a>
+                            <div class="nav-subsection">
+                                <div class="nav-subsection-header" onclick="toggleNavSection(this)">
+                                    <a href="#query-slider" style="flex: 1; text-decoration: none; color: inherit;">3.2.3. slider</a>
+                                    <span class="nav-expand-icon">▶</span>
+                                </div>
+                                <div class="nav-subsection-subsections">
+                                    <a href="#query-single-slider" class="nav-subsection-link">3.2.3.1. single-slider</a>
+                                    <a href="#query-multi-slider" class="nav-subsection-link">3.2.3.2. multi-slider</a>
+                                </div>
+                            </div>
+                            <a href="#query-textbox" class="nav-subsection-link">3.2.4. textbox</a>
+                            <a href="#query-ranking" class="nav-subsection-link">3.2.5. ranking</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <a href="instruction_schema.html" class="nav-link">4. Instruction Schema</a>
             <a href="human_data_schema.html" class="nav-link">5. Human Data Schema</a>
+            <a href="appendix.html" class="nav-link">Appendix</a>
         </div>
     </nav>
+    <script>
+        function toggleNavSection(header) {
+            const section = header.parentElement;
+            const subsections = section.querySelector('.nav-subsections, .nav-subsection-subsections');
+            const icon = header.querySelector('.nav-expand-icon');
+            
+            if (subsections && subsections.classList.contains('expanded')) {
+                subsections.classList.remove('expanded');
+                if (icon) icon.classList.remove('expanded');
+            } else if (subsections) {
+                subsections.classList.add('expanded');
+                if (icon) icon.classList.add('expanded');
+            }
+        }
+        
+        // Highlight active subsection on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const hash = window.location.hash;
+            if (hash) {
+                const target = document.querySelector(hash);
+                if (target) {
+                    const subsectionLink = document.querySelector(`a[href="${hash}"]`);
+                    if (subsectionLink) {
+                        subsectionLink.classList.add('active');
+                        // Expand all parent sections if collapsed
+                        let current = subsectionLink;
+                        while (current) {
+                            const subsection = current.closest('.nav-subsection');
+                            const section = current.closest('.nav-section');
+                            
+                            if (subsection) {
+                                const subsections = subsection.querySelector('.nav-subsection-subsections');
+                                const icon = subsection.querySelector('.nav-expand-icon');
+                                if (subsections && !subsections.classList.contains('expanded')) {
+                                    subsections.classList.add('expanded');
+                                    if (icon) icon.classList.add('expanded');
+                                }
+                                current = subsection;
+                            } else if (section) {
+                                const subsections = section.querySelector('.nav-subsections');
+                                const icon = section.querySelector('.nav-expand-icon');
+                                if (subsections && !subsections.classList.contains('expanded')) {
+                                    subsections.classList.add('expanded');
+                                    if (icon) icon.classList.add('expanded');
+                                }
+                                break;
+                            } else {
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 
     <div class="content-wrapper">
     <div class="container mx-auto max-w-4xl p-6 md:p-12 bg-white shadow-lg rounded-lg my-12 prose prose-lg">
 
-        <h1>3. File Specification: Trial Schema (stimuli.jsonl)</h1>
-        <p>This document details the JSON schema for defining individual experimental trials. In the directory structure, this file is named <code>stimuli.jsonl</code>.</p>
-        <p>Each JSON object represents one "trial" which presents a stimulus (like an image or video) and then asks the user one or more questions about it. The <code>stimuli.jsonl</code> file contains one JSON object per line.</p>
+        <h1>3. File Specification: Trial Schema (trial.jsonl)</h1>
+        <img src="assets/trial_layout.png" alt="Trial Layout" class="w-full max-w-4xl mx-auto mb-6 rounded-lg shadow-md">
+        <p>This document details the JSON schema for defining individual experimental trials. In the directory structure, this file is named <code>trial.jsonl</code>.</p>
+        <p>Each JSON object represents one "trial" which can present one or more stimuli (e.g., text, image, or video) and then ask the user one or more questions. The <code>trial.jsonl</code> file contains one JSON object per line.</p>
+        
+        <p>As shown in the image above, the interface is divided into two panels: the left panel displays the stimuli, and the right panel displays the queries. The trial object consists of two main arrays of objects that correspond to these components: the <code>stimuli</code> array for the left panel and the <code>queries</code> array for the right panel.</p>
         
         <h2 id="top-level-fields">3.1. Top-Level Fields (Single Trial)</h2>
         <p>The root object of a single trial contains the following key properties:</p>
@@ -76,19 +192,17 @@
                         <td>A unique identifier for this specific trial or stimulus (e.g., "trial_005"). This ID is used in the <code>config.json</code> file.</td>
                     </tr>
                     <tr>
-                        <td><code>input_type</code></td>
-                        <td>String</td>
-                        <td>Specifies the type of media to be presented. Common values include "img", "video", or "text".</td>
-                    </tr>
-                    <tr>
-                        <td><code>media_url</code></td>
-                        <td>Array of Strings</td>
-                        <td>An array containing one or more paths to the media files (relative to the <code>assets/</code> folder). Even if there is only one item, it should be in an array.</td>
-                    </tr>
-                    <tr>
-                        <td><code>commentary</code></td>
-                        <td>String</td>
-                        <td>An optional field for any text that should be displayed alongside or before the stimulus. Can be left empty (<code>""</code>).</td>
+                        <td><code>stimuli</code></td>
+                        <td>Array of Objects</td>
+                        <td>
+                            Ordered list of stimuli to present for this trial. Each stimulus object must include:
+                            <ul>
+                                <li><code>input_type</code> (String): "img", "video", or "text".</li>
+                                <li>If <code>input_type</code> is "img" or "video": include <code>media_url</code> (Array&lt;String&gt;) with one or more relative paths. Multiple URLs will be rendered side by side.</li>
+                                <li>If <code>input_type</code> is "text": include <code>text</code> (String; HTML allowed) containing the content to display.</li>
+                            </ul>
+                            For optional fields (title, fontsize, width, height, dimension), see <a href="appendix.html#stimulus-optional-fields">Appendix A.3: Optional Stimulus Fields</a>.
+                        </td>
                     </tr>
                     <tr>
                         <td><code>queries</code></td>
@@ -105,23 +219,28 @@
         </div>
 
         <h3>3.1.1. Full Trial Object Example</h3>
-        <p>Here is an example of a complete trial object that shows an image and asks two questions: one multiple-choice and one slider.</p>
+        <p>Here is an example of a complete trial object that shows an image, followed by a short text blurb, then asks two questions: one multiple-choice and one slider.</p>
         <pre><code>{
-  "stimuli_id": "trial_agent_01",
+  "stimuli_id": "trial_balls_01",
+  "stimuli": [
+    {
   "input_type": "img",
-  "media_url": [
-    "https://placehold.co/600x400/e2e8f0/334155?text=Example+Stimulus+Image"
+      "media_url": ["assets/balls.jpg"]
+    },
+    {
+      "input_type": "text",
+      "text": "Observe the agent's action in the image above."
+    }
   ],
-  "commentary": "Observe the agent's action in the image above.",
   "queries": [
     {
-      "prompt": "What is the agent's primary goal?",
+      "prompt": "Which ball appears bigger?",
       "type": "multi-choice",
-      "tag": "agent_goal",
+      "tag": "ball_size",
       "option": [
-        "Reaching the red box",
-        "Reaching the blue box",
-        "Looking for a key"
+        "Blue Ball",
+        "Red Ball",
+        "Equal Size"
       ],
       "randomize_order": false,
       "required": true
@@ -146,26 +265,31 @@
   ]
 }</code></pre>
 
-        <h3>3.1.2. Live Demo of Full Trial</h3>
+        <p>For an example with multiple media URLs and dimensions, see <a href="appendix.html#multiple-media-urls">Appendix A.1</a>.</p>
+
+        <h5 class="text-base font-semibold text-gray-600 mt-4 mb-2">Live Demo:</h5>
         <div class="rendered-example bg-gray-100 p-4 rounded-md mb-8 border border-gray-200 not-prose">
-            <img src="https://placehold.co/600x400/e2e8f0/334155?text=Example+Stimulus+Image" alt="Example Stimulus" class="w-full max-w-lg mx-auto rounded-md shadow-sm mb-4">
-            <p class="text-base text-gray-700 italic text-center mb-6">Observe the agent's action in the image above.</p>
-            
+            <div class="demo-panel-layout">
+                <div class="demo-panel-left">
+                    <img src="assets/balls.jpg" alt="Example Stimulus" class="w-full rounded-md shadow-sm mb-4">
+                    <p class="text-base text-gray-700 italic text-center">Observe the agent's action in the image above.</p>
+                </div>
+                <div class="demo-panel-right">
             <div class="bg-white p-4 rounded-md shadow-inner">
                 <div class="mb-6">
-                    <p class="font-medium mb-3 text-gray-900">What is the agent's primary goal?<span class="required-asterisk">*</span></p>
+                    <p class="font-medium mb-3 text-gray-900">Which ball appears bigger?<span class="required-asterisk">*</span></p>
                     <div class="space-y-2">
                         <label class="flex items-center">
-                            <input type="radio" name="agent-goal" class="form-radio text-blue-600 h-5 w-5">
-                            <span class="ml-2 text-gray-700">Reaching the red box</span>
+                            <input type="radio" name="ball-size" class="form-radio text-blue-600 h-5 w-5">
+                            <span class="ml-2 text-gray-700">Blue Ball</span>
                         </label>
                         <label class="flex items-center">
-                            <input type="radio" name="agent-goal" class="form-radio text-blue-600 h-5 w-5">
-                            <span class="ml-2 text-gray-700">Reaching the blue box</span>
+                            <input type="radio" name="ball-size" class="form-radio text-blue-600 h-5 w-5">
+                            <span class="ml-2 text-gray-700">Red Ball</span>
                         </label>
                         <label class="flex items-center">
-                            <input type="radio" name="agent-goal" class="form-radio text-blue-600 h-5 w-5">
-                            <span class="ml-2 text-gray-700">Looking for a key</span>
+                            <input type="radio" name="ball-size" class="form-radio text-blue-600 h-5 w-5">
+                            <span class="ml-2 text-gray-700">Equal Size</span>
                         </label>
                     </div>
                 </div>
@@ -176,6 +300,8 @@
                         <div class="slider-labels" style="position: relative; top: 0.5rem; height: auto;">
                             <span class="slider-label-item" style="left: 0%; transform: translateX(0%);">Not at all confident</span>
                             <span class="slider-label-item" style="left: 100%; transform: translateX(-100%);">Completely confident</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -183,72 +309,50 @@
         </div>
 
 
-        <h2 id="queries">3.2. Query Object Schema</h2>
-        <p>The <code>queries</code> array contains objects that define each question. All query objects share these common fields:</p>
+        <h2 id="queries">3.2. Query Types and Arguments</h2>
+        <p>The <code>queries</code> array defines each prompt or question. All query objects include at least <code>prompt</code>, <code>type</code>, and optional <code>required</code>. The full argument list is specified per query type below.</p>
+
+        <h3 id="query-text">3.2.1. text-instruction</h3>
+        <p class="prose">Displays informative text only (no response is collected). Use this to insert explanatory copy between questions.</p>
         <div class="overflow-x-auto">
             <table>
                 <thead>
-                    <tr>
-                        <th>Key</th>
-                        <th>Type</th>
-                        <th>Description</th>
-                    </tr>
+                    <tr><th>Argument</th><th>Type</th><th>Required</th><th>Description</th></tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><code>prompt</code></td>
-                        <td>String</td>
-                        <td>The question text presented to the user (e.t., "What is the agent's goal?").</td>
-                    </tr>
-                    <tr>
-                        <td><code>type</code></td>
-                        <td>String</td>
-                        <td>The type of response widget to display. See <strong><a href="#query-types">Section 3.2.1</a></strong> for options.</td>
-                    </tr>
-                    <tr>
-                        <td><code>tag</code></td>
-                        <td>String</td>
-                        <td>A unique, computer-friendly key for this query (e.g., "agent_goal"). Used to store data.</td>
-                    </tr>
-                    <tr>
-                        <td><code>option</code></td>
-                        <td>Array of Strings</td>
-                        <td>A list of choices. Used for <code>multi-choice</code>, <code>multi-select</code>, and <code>multi-slider</code>.</td>
-                    </tr>
-                    <tr>
-                        <td><code>randomize_order</code></td>
-                        <td>Boolean</td>
-                        <td>If <code>true</code>, the order of items in the <code>option</code> array will be shuffled for each participant.</td>
-                    </tr>
-                    <tr>
-                        <td><code>slider_config</code></td>
-                        <td>Object</td>
-                        <td>Required <em>only</em> if <code>type</code> is "single-slider" or "multi-slider". See <strong><a href="#slider-config">Section 3.2.2</a></strong>.</td>
-                    </tr>
-                    <tr>
-                        <td><code>sampling_size</code></td>
-                        <td>Number</td>
-                        <td>Optional. Applies <em>only</em> to <code>multi-slider</code>. If specified, only a random subset of <code>option</code> items (of size <code>sampling_size</code>) will be shown to each participant. Used for reducing cognitive load when there are many statements to rate.</td>
-                    </tr>
-                    <tr>
-                        <td><code>required</code></td>
-                        <td>Boolean</td>
-                        <td>Optional. If <code>true</code>, the user must provide a response to this query before proceeding. Default is <code>false</code> if not specified.</td>
-                    </tr>
-                    <tr>
-                        <td><code>answer</code></td>
-                        <td>Number</td>
-                        <td>Optional. The 0-based index of the correct option in the <code>option</code> array. Used for providing feedback in comprehension quizzes or test trials.</td>
-                    </tr>
+                    <tr><td><code>prompt</code></td><td>String (HTML allowed)</td><td>Yes</td><td>Text to display.</td></tr>
+                    <tr><td><code>type</code></td><td>String</td><td>Yes</td><td>Must be <code>"text-instruction"</code>.</td></tr>
+                    <tr><td><code>required</code></td><td>Boolean</td><td>No</td><td>Ignored for this type.</td></tr>
                 </tbody>
             </table>
         </div>
+        <h5 class="text-base font-semibold text-gray-600 mt-4 mb-2">JSON Example:</h5>
+        <pre><code>{
+  "prompt": "In the next questions, you'll evaluate the agent's beliefs.",
+  "type": "text-instruction"
+}</code></pre>
 
-        <h3 id="query-types">3.2.1. Query Types (<code>type</code>)</h3>
-        <p>This section details the different response widgets available.</p>
+        <h3 id="query-mc">3.2.2. multiple-choice</h3>
+        <p class="prose">Multiple-choice queries allow participants to select from a list of options. This query type has two variants: single-select (radio buttons) and multi-select (checkboxes).</p>
         
-        <h4 class="prose">3.2.1.1. multi-choice</h4>
-        <p class="prose">Presents a list of radio buttons from the <code>option</code> array. The user can select only one.</p>
+        <h4 class="prose" id="query-mc-single">3.2.2.1. single-select</h4>
+        <p class="prose">Presents radio buttons; user selects exactly one choice.</p>
+        <div class="overflow-x-auto">
+            <table>
+                <thead>
+                    <tr><th>Argument</th><th>Type</th><th>Required</th><th>Description</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>prompt</code></td><td>String</td><td>Yes</td><td>Question text.</td></tr>
+                    <tr><td><code>type</code></td><td>String</td><td>Yes</td><td>Use <code>"multi-choice"</code>.</td></tr>
+                    <tr><td><code>tag</code></td><td>String</td><td>Yes</td><td>Storage key.</td></tr>
+                    <tr><td><code>option</code></td><td>Array&lt;String&gt;</td><td>Yes</td><td>Choices to display.</td></tr>
+                    <tr><td><code>randomize_order</code></td><td>Boolean</td><td>No</td><td>Shuffle options per participant.</td></tr>
+                    <tr><td><code>required</code></td><td>Boolean</td><td>No</td><td>Must answer before continuing.</td></tr>
+                    <tr><td><code>answer</code></td><td>Number</td><td>No</td><td>0-based index of correct option (for quizzes).</td></tr>
+                </tbody>
+            </table>
+        </div>
         <h5 class="text-base font-semibold text-gray-600 mt-4 mb-2">JSON Example:</h5>
         <pre><code>{
   "prompt": "What is the capital of France?",
@@ -262,8 +366,7 @@
   ],
   "randomize_order": true,
   "required": true
-}
-// Data would be saved as: "capital_choice": { "idx": 2, "option_text": "Paris" }</code></pre>
+}</code></pre>
         <h5 class="text-base font-semibold text-gray-600 mt-4 mb-2">Live Demo:</h5>
         <div class="rendered-example bg-gray-100 p-4 rounded-md mb-8 border border-gray-200 not-prose">
             <p class="font-medium mb-3">What is the capital of France?<span class="required-asterisk">*</span></p>
@@ -287,24 +390,89 @@
             </div>
         </div>
 
-        <h4 class="prose">3.2.1.2. multi-select</h4>
-        <p class="prose">Presents a list of checkboxes from the <code>option</code> array. The user can select one or more.</p>
+        <h4 class="prose" id="query-mc-multi">3.2.2.2. multi-select</h4>
+        <p class="prose">Presents checkboxes; user can select one or more choices.</p>
+        <div class="overflow-x-auto">
+            <table>
+                <thead>
+                    <tr><th>Argument</th><th>Type</th><th>Required</th><th>Description</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>prompt</code></td><td>String</td><td>Yes</td><td>Question text.</td></tr>
+                    <tr><td><code>type</code></td><td>String</td><td>Yes</td><td>Use <code>"multi-select"</code>.</td></tr>
+                    <tr><td><code>tag</code></td><td>String</td><td>Yes</td><td>Storage key.</td></tr>
+                    <tr><td><code>option</code></td><td>Array&lt;String&gt;</td><td>Yes</td><td>Choices to display.</td></tr>
+                    <tr><td><code>randomize_order</code></td><td>Boolean</td><td>No</td><td>Shuffle options per participant.</td></tr>
+                    <tr><td><code>required</code></td><td>Boolean</td><td>No</td><td>Must answer before continuing.</td></tr>
+                </tbody>
+            </table>
+        </div>
         <h5 class="text-base font-semibold text-gray-600 mt-4 mb-2">JSON Example:</h5>
         <pre><code>{
-  "prompt": "Which colors do you see?",
+  "prompt": "Which numbers are greater than 10?",
   "type": "multi-select",
-  "tag": "color_select",
-  "option": [ "Red", "Green", "Blue" ],
+  "tag": "numbers_gt_10",
+  "option": [
+    "5",
+    "12",
+    "8",
+    "15",
+    "3",
+    "20"
+  ],
   "randomize_order": false,
   "required": true
-}
-// Data would be saved as: "color_select": [
-//   { "idx": 0, "option_text": "Red" },
-//   { "idx": 2, "option_text": "Blue" }
-// ]</code></pre>
+}</code></pre>
+        <h5 class="text-base font-semibold text-gray-600 mt-4 mb-2">Live Demo:</h5>
+        <div class="rendered-example bg-gray-100 p-4 rounded-md mb-8 border border-gray-200 not-prose">
+            <p class="font-medium mb-3">Which numbers are greater than 10?<span class="required-asterisk">*</span></p>
+            <div class="space-y-2">
+                <label class="flex items-center">
+                    <input type="checkbox" name="numbers-select-demo" class="form-checkbox text-blue-600 h-5 w-5">
+                    <span class="ml-2 text-gray-700">5</span>
+                </label>
+                <label class="flex items-center">
+                    <input type="checkbox" name="numbers-select-demo" class="form-checkbox text-blue-600 h-5 w-5">
+                    <span class="ml-2 text-gray-700">12</span>
+                </label>
+                <label class="flex items-center">
+                    <input type="checkbox" name="numbers-select-demo" class="form-checkbox text-blue-600 h-5 w-5">
+                    <span class="ml-2 text-gray-700">8</span>
+                </label>
+                <label class="flex items-center">
+                    <input type="checkbox" name="numbers-select-demo" class="form-checkbox text-blue-600 h-5 w-5">
+                    <span class="ml-2 text-gray-700">15</span>
+                </label>
+                <label class="flex items-center">
+                    <input type="checkbox" name="numbers-select-demo" class="form-checkbox text-blue-600 h-5 w-5">
+                    <span class="ml-2 text-gray-700">3</span>
+                </label>
+                <label class="flex items-center">
+                    <input type="checkbox" name="numbers-select-demo" class="form-checkbox text-blue-600 h-5 w-5">
+                    <span class="ml-2 text-gray-700">20</span>
+                </label>
+            </div>
+        </div>
 
-        <h4 class="prose">3.2.1.3. single-slider</h4>
-        <p class="prose">Presents a single slider. Requires <code>slider_config</code>. The <code>option</code> field is not used.</p>
+        <h3 id="query-slider">3.2.3. slider</h3>
+        <p class="prose">Single or multiple sliders for ratings.</p>
+
+        <h4 class="prose" id="query-single-slider">3.2.3.1. single-slider</h4>
+        <p class="prose">Presents one slider (no <code>option</code> list). Requires <code>slider_config</code>.</p>
+        <div class="overflow-x-auto">
+            <table>
+                <thead>
+                    <tr><th>Argument</th><th>Type</th><th>Required</th><th>Description</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>prompt</code></td><td>String</td><td>Yes</td><td>Question text.</td></tr>
+                    <tr><td><code>type</code></td><td>String</td><td>Yes</td><td>Use <code>"single-slider"</code>.</td></tr>
+                    <tr><td><code>tag</code></td><td>String</td><td>Yes</td><td>Storage key.</td></tr>
+                    <tr><td><code>slider_config</code></td><td>Object</td><td>Yes</td><td>See <a href="appendix.html#slider-config">Appendix A.2: Slider Config</a>.</td></tr>
+                    <tr><td><code>required</code></td><td>Boolean</td><td>No</td><td>Must answer before continuing.</td></tr>
+                </tbody>
+            </table>
+        </div>
         <h5 class="text-base font-semibold text-gray-600 mt-4 mb-2">JSON Example:</h5>
         <pre><code>{
   "prompt": "How confident are you?",
@@ -321,8 +489,7 @@
     "show_label_values": true
   },
   "required": true
-}
-// Data would be saved as: "confidence_rating": 78</code></pre>
+}</code></pre>
         <h5 class="text-base font-semibold text-gray-600 mt-4 mb-2">Live Demo:</h5>
         <div class="rendered-example bg-gray-100 p-4 rounded-md mb-8 border border-gray-200 not-prose">
             <p class="font-medium mb-3 text-gray-900">How confident are you?<span class="required-asterisk">*</span>: <span id="single-slider-val-demo-2" class="font-semibold">50</span></p>
@@ -335,191 +502,199 @@
             </div>
         </div>
 
-        <h4 class="prose">3.2.1.4. multi-slider</h4>
-        <p class="prose">Presents one slider for each item in the <code>option</code> array. Requires <code>slider_config</code>. Optionally, you can use <code>sampling_size</code> to show only a random subset of options to reduce cognitive load.</p>
+        <h4 class="prose" id="query-multi-slider">3.2.3.2. multi-slider</h4>
+        <p class="prose">Presents one slider per item in <code>option</code>. Requires <code>slider_config</code>. Optionally show a random subset via <code>sampling_size</code>.</p>
+        <div class="overflow-x-auto">
+            <table>
+                <thead>
+                    <tr><th>Argument</th><th>Type</th><th>Required</th><th>Description</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>prompt</code></td><td>String</td><td>Yes</td><td>Instruction for the ratings.</td></tr>
+                    <tr><td><code>type</code></td><td>String</td><td>Yes</td><td>Use <code>"multi-slider"</code>.</td></tr>
+                    <tr><td><code>tag</code></td><td>String</td><td>Yes</td><td>Storage key.</td></tr>
+                    <tr><td><code>option</code></td><td>Array&lt;String&gt;</td><td>Yes</td><td>Labels for each slider.</td></tr>
+                    <tr><td><code>slider_config</code></td><td>Object</td><td>Yes</td><td>See <a href="appendix.html#slider-config">Appendix A.2: Slider Config</a>.</td></tr>
+                    <tr><td><code>sampling_size</code></td><td>Number</td><td>No</td><td>Randomly show only N options per participant.</td></tr>
+                    <tr><td><code>randomize_order</code></td><td>Boolean</td><td>No</td><td>Shuffle the order of <code>option</code> items.</td></tr>
+                    <tr><td><code>required</code></td><td>Boolean</td><td>No</td><td>Must answer before continuing.</td></tr>
+                </tbody>
+            </table>
+        </div>
         <h5 class="text-base font-semibold text-gray-600 mt-4 mb-2">JSON Example:</h5>
         <pre><code>{
   "prompt": "Please rate how likely each of the following statements is to be true",
   "type": "multi-slider",
   "tag": "statement_ratings",
   "option": [
-    "Statement 1",
-    "Statement 2",
-    "Statement 3"
+    "I am more easily convinced by data and reasoning than by emotional appeals.",
+    "I feel stressed when my environment is disorganized or messy.",
+    "I usually think out loud and test ideas by talking them through."
   ],
   "slider_config": {
     "min": 0,
     "max": 100,
     "default_value": 50,
     "labels": [
-      { "value": 0, "label": "Extremely unlikely" },
+      { "value": 0, "label": "Strongly disagree" },
       { "value": 50, "label": "Neutral" },
-      { "value": 100, "label": "Extremely likely" }
+      { "value": 100, "label": "Strongly agree" }
     ],
     "show_label_values": true
   },
   "randomize_order": false,
   "required": true
-}
-// Data would be saved as: "statement_ratings": {
-//   "Statement 1": 50,
-//   "Statement 2": 50,
-//   "Statement 3": 50
-// }</code></pre>
-        <h5 class="text-base font-semibold text-gray-600 mt-4 mb-2">Example with <code>sampling_size</code>:</h5>
-        <pre><code>{
-  "prompt": "Please rate the following statements about the agent's initial beliefs:",
-  "type": "multi-slider",
-  "tag": "statement_rating",
-  "option": [
-    "The player initially believed that box 3 contained a blue key.",
-    "The player initially believed that box 1 and 2 contained no blue key.",
-    "The player initially believed that box 1 might have the blue key.",
-    "The player initially believed the blue key was not in box 2.",
-    "The player initially thought that there may have been a key in box 2."
-  ],
-  "slider_config": {
-    "min": 1,
-    "max": 7,
-    "default_value": 4,
-    "labels": [
-      { "value": 1, "label": "Extremely unlikely" },
-      { "value": 7, "label": "Extremely likely" }
-    ],
-    "show_label_values": true
-  },
-  "sampling_size": 2,
-  "randomize_order": true,
-  "required": true
-}
-// With sampling_size: 2, only 2 randomly selected statements will be shown to each participant
-// Data would be saved as: "statement_rating": {
-//   "The player initially believed that box 3 contained a blue key.": 5,
-//   "The player initially thought that there may have been a key in box 2.": 3
-// }</code></pre>
+}</code></pre>
         <h5 class="text-base font-semibold text-gray-600 mt-4 mb-2">Live Demo:</h5>
         <div class="rendered-example bg-gray-100 p-4 rounded-md mb-8 border border-gray-200 not-prose">
-            <p class="font-medium mb-3">Please rate how likely each of the following statements is to be true<span class="required-asterisk">*</span></p>
+            <p class="font-medium mb-4">Please rate how likely each of the following statements is to be true<span class="required-asterisk">*</span></p>
             <div class="space-y-6">
                 <div>
-                    <p class="text-sm text-gray-700 mb-2">Statement 1: <span id="multi-slider-val-1" class="font-semibold">50</span></p>
+                    <p class="text-base font-medium text-gray-900 mb-2">I am more easily convinced by data and reasoning than by emotional appeals. <span class="text-gray-600 font-normal">(Value: <span id="multi-slider-val-1" class="font-semibold">50</span>)</span></p>
                     <div class="slider-wrapper">
                         <input type="range" min="0" max="100" value="50" class="w-full h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer" oninput="document.getElementById('multi-slider-val-1').innerText = this.value">
                         <div class="slider-labels">
-                            <span class="slider-label-item" style="left: 0%; transform: translateX(0%);">0<br>Extremely unlikely</span>
+                            <span class="slider-label-item" style="left: 0%; transform: translateX(0%);">0<br>Strongly disagree</span>
                             <span class="slider-label-item" style="left: 50%; transform: translateX(-50%);">50<br>Neutral</span>
-                            <span class="slider-label-item" style="left: 100%; transform: translateX(-100%);">100<br>Extremely likely</span>
+                            <span class="slider-label-item" style="left: 100%; transform: translateX(-100%);">100<br>Strongly agree</span>
                         </div>
                     </div>
                 </div>
                 <div>
-                    <p class="text-sm text-gray-700 mb-2">Statement 2: <span id="multi-slider-val-2" class="font-semibold">50</span></p>
+                    <p class="text-base font-medium text-gray-900 mb-2">I feel stressed when my environment is disorganized or messy. <span class="text-gray-600 font-normal">(Value: <span id="multi-slider-val-2" class="font-semibold">50</span>)</span></p>
                     <div class="slider-wrapper">
                         <input type="range" min="0" max="100" value="50" class="w-full h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer" oninput="document.getElementById('multi-slider-val-2').innerText = this.value">
                         <div class="slider-labels">
-                            <span class="slider-label-item" style="left: 0%; transform: translateX(0%);">0<br>Extremely unlikely</span>
+                            <span class="slider-label-item" style="left: 0%; transform: translateX(0%);">0<br>Strongly disagree</span>
                             <span class="slider-label-item" style="left: 50%; transform: translateX(-50%);">50<br>Neutral</span>
-                            <span class="slider-label-item" style="left: 100%; transform: translateX(-100%);">100<br>Extremely likely</span>
+                            <span class="slider-label-item" style="left: 100%; transform: translateX(-100%);">100<br>Strongly agree</span>
                         </div>
                     </div>
                 </div>
                 <div>
-                    <p class="text-sm text-gray-700 mb-2">Statement 3: <span id="multi-slider-val-3" class="font-semibold">50</span></p>
+                    <p class="text-base font-medium text-gray-900 mb-2">I usually think out loud and test ideas by talking them through. <span class="text-gray-600 font-normal">(Value: <span id="multi-slider-val-3" class="font-semibold">50</span>)</span></p>
                     <div class="slider-wrapper">
                         <input type="range" min="0" max="100" value="50" class="w-full h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer" oninput="document.getElementById('multi-slider-val-3').innerText = this.value">
                         <div class="slider-labels">
-                            <span class="slider-label-item" style="left: 0%; transform: translateX(0%);">0<br>Extremely unlikely</span>
+                            <span class="slider-label-item" style="left: 0%; transform: translateX(0%);">0<br>Strongly disagree</span>
                             <span class="slider-label-item" style="left: 50%; transform: translateX(-50%);">50<br>Neutral</span>
-                            <span class="slider-label-item" style="left: 100%; transform: translateX(-100%);">100<br>Extremely likely</span>
+                            <span class="slider-label-item" style="left: 100%; transform: translateX(-100%);">100<br>Strongly agree</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-
-        <h4 class="prose">3.2.1.5. textbox</h4>
-        <p class="prose">Provides a free-response text area for the user to type in an answer. The <code>option</code> field is not used.</p>
+        <h4 class="prose" id="query-textbox">3.2.4. textbox</h4>
+        <p class="prose">Provides a free-response text area for the user to type in an answer.</p>
+        <div class="overflow-x-auto">
+            <table>
+                <thead>
+                    <tr><th>Argument</th><th>Type</th><th>Required</th><th>Description</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>prompt</code></td><td>String</td><td>Yes</td><td>Question text.</td></tr>
+                    <tr><td><code>type</code></td><td>String</td><td>Yes</td><td>Use <code>"textbox"</code>.</td></tr>
+                    <tr><td><code>tag</code></td><td>String</td><td>Yes</td><td>Storage key.</td></tr>
+                    <tr><td><code>required</code></td><td>Boolean</td><td>No</td><td>Must answer before continuing.</td></tr>
+                </tbody>
+            </table>
+        </div>
         <h5 class="text-base font-semibold text-gray-600 mt-4 mb-2">JSON Example:</h5>
         <pre><code>{
   "prompt": "Please describe the agent's behavior.",
   "type": "textbox",
   "tag": "agent_description",
   "required": true
-}
-// Data would be saved as: "agent_description": "The agent moved..."</code></pre>
+}</code></pre>
         <h5 class="text-base font-semibold text-gray-600 mt-4 mb-2">Live Demo:</h5>
         <div class="rendered-example bg-gray-100 p-4 rounded-md mb-8 border border-gray-200 not-prose">
             <label for="agent_description_demo" class="font-medium mb-3 block">Please describe the agent's behavior.<span class="required-asterisk">*</span></label>
             <textarea id="agent_description_demo" rows="3" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"></textarea>
     </div>
 
-
-        <h3 id="slider-config">3.2.2. Slider Config (<code>slider_config</code>)</h3>
-        <p>This object is required for <code>single-slider</code> and <code>multi-slider</code> types.</p>
+        <h4 class="prose" id="query-ranking">3.2.5. ranking</h4>
+        <p class="prose">Presents a list of items from the <code>option</code> array that the user can drag and drop to rank in order. The user must rank all items.</p>
         <div class="overflow-x-auto">
             <table>
                 <thead>
-                    <tr>
-                        <th>Key</th>
-                        <th>Type</th>
-                        <th>Description</th>
-                    </tr>
+                    <tr><th>Argument</th><th>Type</th><th>Required</th><th>Description</th></tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><code>min</code></td>
-                        <td>Number</td>
-                        <td>The minimum value of the slider (e.g., 0).</td>
-                    </tr>
-                    <tr>
-                        <td><code>max</code></td>
-                        <td>Number</td>
-                        <td>The maximum value of the slider (e.g., 100).</td>
-                    </tr>
-                    <tr>
-                        <td><code>default_value</code></td>
-                        <td>Number</td>
-                        <td>The value where the slider handle starts.</td>
-                    </tr>
-                    <tr>
-                        <td><code>labels</code></td>
-                        <td>Array of Objects</td>
-                        <td>An array of label objects to display under the slider. See table below.</td>
-                    </tr>
-                    <tr>
-                        <td><code>show_label_values</code></td>
-                        <td>Boolean</td>
-                        <td>If <code>true</code>, displays the numeric value (from <code>value</code>) alongside the text (from <code>label</code>).</td>
-                    </tr>
+                    <tr><td><code>prompt</code></td><td>String</td><td>Yes</td><td>Instruction to rank items.</td></tr>
+                    <tr><td><code>type</code></td><td>String</td><td>Yes</td><td>Use <code>"ranking"</code>.</td></tr>
+                    <tr><td><code>tag</code></td><td>String</td><td>Yes</td><td>Storage key.</td></tr>
+                    <tr><td><code>option</code></td><td>Array&lt;String&gt;</td><td>Yes</td><td>Items to rank.</td></tr>
+                    <tr><td><code>randomize_order</code></td><td>Boolean</td><td>No</td><td>Shuffle items before ranking.</td></tr>
+                    <tr><td><code>required</code></td><td>Boolean</td><td>No</td><td>Must complete ranking.</td></tr>
                 </tbody>
             </table>
         </div>
-
-        <p class="prose my-4">Each object in the <code>labels</code> array has the following structure:</p>
-        <div class="overflow-x-auto">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Key</th>
-                        <th>Type</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><code>value</code></td>
-                        <td>Number</td>
-                        <td>The numeric position on the slider where this label should appear.</td>
-                    </tr>
-                    <tr>
-                        <td><code>label</code></td>
-                        <td>String</td>
-                        <td>The text to display at that position (e.g., "Neutral", "Strongly Agree").</td>
-                    </tr>
-                </tbody>
-            </table>
+        <h5 class="text-base font-semibold text-gray-600 mt-4 mb-2">JSON Example:</h5>
+        <pre><code>{
+  "prompt": "Rank the following goals in order of importance (drag to reorder):",
+  "type": "ranking",
+  "tag": "goal_ranking",
+  "option": [
+    "Finding the key",
+    "Avoiding obstacles",
+    "Reaching the exit",
+    "Collecting coins"
+  ],
+  "randomize_order": true,
+  "required": true
+}</code></pre>
+        <h5 class="text-base font-semibold text-gray-600 mt-4 mb-2">Live Demo:</h5>
+        <div class="rendered-example bg-gray-100 p-4 rounded-md mb-8 border border-gray-200 not-prose">
+            <p class="font-medium mb-3">Rank the following goals in order of importance (drag to reorder):<span class="required-asterisk">*</span></p>
+            <div id="ranking-demo" class="space-y-2">
+                <div class="bg-white p-3 rounded border border-gray-300 cursor-move draggable-item" draggable="true" data-item="Finding the key">
+                    <span class="text-gray-700">Finding the key</span>
+                </div>
+                <div class="bg-white p-3 rounded border border-gray-300 cursor-move draggable-item" draggable="true" data-item="Avoiding obstacles">
+                    <span class="text-gray-700">Avoiding obstacles</span>
+                </div>
+                <div class="bg-white p-3 rounded border border-gray-300 cursor-move draggable-item" draggable="true" data-item="Reaching the exit">
+                    <span class="text-gray-700">Reaching the exit</span>
+                </div>
+                <div class="bg-white p-3 rounded border border-gray-300 cursor-move draggable-item" draggable="true" data-item="Collecting coins">
+                    <span class="text-gray-700">Collecting coins</span>
+                </div>
+            </div>
+            <p class="text-sm text-gray-500 mt-2 italic">(Drag items to reorder)</p>
         </div>
+        <script>
+            (function() {
+                const container = document.getElementById('ranking-demo');
+                if (!container) return;
+                
+                let draggedElement = null;
+                
+                container.querySelectorAll('.draggable-item').forEach(item => {
+                    item.addEventListener('dragstart', function(e) {
+                        draggedElement = this;
+                        this.style.opacity = '0.5';
+                        e.dataTransfer.effectAllowed = 'move';
+                    });
+                    
+                    item.addEventListener('dragend', function(e) {
+                        this.style.opacity = '1';
+                    });
+                    
+                    item.addEventListener('dragover', function(e) {
+                        e.preventDefault();
+                        e.dataTransfer.dropEffect = 'move';
+                        if (this !== draggedElement && this.nextSibling !== draggedElement) {
+                            container.insertBefore(draggedElement, this);
+                        }
+                    });
+                    
+                    item.addEventListener('drop', function(e) {
+                        e.preventDefault();
+                    });
+                });
+            })();
+        </script>
         </div>
     </div>
 

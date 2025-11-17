@@ -14,12 +14,6 @@
       "Lance Ying"
     ],
     "stimuli_count": 40,
-    "judgment_count": 13542,
-    "participants_info":{
-      "count": 94,
-      "age": 35.7,
-      "gender": {"male": 27, "female": 67, "other": 0}
-    },
     "experimentFlow": [
       {
       "blocks": [
