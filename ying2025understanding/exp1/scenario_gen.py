@@ -171,7 +171,7 @@ STIMULI_SETS = [
       ]
 
 TRIAL_TEMPLATE = """{
-  "stimuli_id": "STIMULUS_ID",
+  "id": "STIMULUS_ID",
   "stimuli": [
     {
       "input_type": "img",

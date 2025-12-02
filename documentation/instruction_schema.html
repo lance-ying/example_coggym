@@ -279,56 +279,46 @@
 
         <section id="full-example">
             <h2>4.5. Full <code>instruction.jsonl</code> Example</h2>
-            <p>This example shows a sequence containing a welcome page, a second instruction page with an image, a test trial, and a final comprehension quiz.</p>
+            <p>This example shows a sequence containing a welcome page, an instruction page with an image, a test trial, and a final comprehension quiz for a simple shape size detection task.</p>
             <pre><code>{
   "type": "instruction",
-  "text": "<p>Thank you for participating. In this task, you will observe an agent (a blue circle) move in a simple environment.</p><strong>Your goal is to determine what the agent wants.</strong><p>Please pay close attention to its behavior.</p>"
+  "text": "<p>Thank you for participating in this experiment.</p><p><strong>Your task is to identify which shape is larger.</strong></p><p>You will see two shapes side by side. Please carefully compare their sizes and select your answer.</p>"
 }
 {
   "type": "instruction",
-  "text": "<p>You will see a scene like the one below. The blue circle is the agent. The red and blue boxes are potential goals. Your task is to judge which goal the agent wants after observing its movement.</p>",
+  "text": "<p>In each trial, you will see two shapes displayed side by side. Your task is to determine which shape has the larger area.</p>",
   "media_url": [
-    "https://placehold.co/600x400/e2e8f0/334155?text=Example+Scene"
+    "https://placehold.co/600x400/e2e8f0/334155?text=Example+Shapes"
   ]
 }
 {
   "type": "test_trial",
-  "image": "assets/stimuli/demo_1.gif",
-  "commentary": "Observe the agent's action in the image above.
-<br><br>
-If more than one gem seems likely, you can select all likely gems. Remember that some keys might be hidden among the boxes.",
-  "queries": [
-    {
-      "prompt": "What is the agent's primary goal?",
-      "type": "multi-choice",
-      "options": ["Reaching the red box", "Reaching the blue box", "Looking for a key"],
-      "required": true,
-    }
-  ],
-  "feedback": "In this example, the player is going for the red box!"
+  "stimuli_id": "practice_1",
+  "feedback": "In this practice example, the circle is larger than the square."
 }
 {
   "type": "comprehension_quiz",
-  "text": "<p>Please answer the following questions.</p>",
+  "text": "<p>Please answer the following questions to confirm your understanding.</p>",
   "queries": [
     {
       "prompt": "What is your main task in this experiment?",
       "type": "multi-choice",
       "tag": "quiz_q1",
       "option": [
-        "To click the boxes as fast as possible.",
-        "To determine the agent's goal.",
-        "To count the number of circles."
+        "To count the number of shapes.",
+        "To identify which shape is larger.",
+        "To name the shapes."
       ],
       "answer": 1
     },
     {
-      "prompt": "Is this a timed experiment?",
+      "prompt": "How many shapes will you see in each trial?",
       "type": "multi-choice",
       "tag": "quiz_q2",
       "option": [
-        "Yes",
-        "No"
+        "One",
+        "Two",
+        "Three"
       ],
       "answer": 1
     }
@@ -345,15 +335,17 @@ If more than one gem seems likely, you can select all likely gems. Remember that
                 <div class="rendered-example">
                     <span class="demo-Module-label">Module 1 of 4: Instruction</span>
                     <div class="space-y-4 text-base text-gray-700">
-                        <p>Thank you for participating. In this task, you will observe an agent (a blue circle) move in a simple environment.</p><strong>Your goal is to determine what the agent wants.</strong><p>Please pay close attention to its behavior.</p>
+                        <p>Thank you for participating in this experiment.</p>
+                        <p><strong>Your task is to identify which shape is larger.</strong></p>
+                        <p>You will see two shapes side by side. Please carefully compare their sizes and select your answer.</p>
                     </div>
                 </div>
 
                 <div class="rendered-example">
                     <span class="demo-Module-label">Module 2 of 4: Instruction</span>
                     <div class="space-y-4 text-base text-gray-700">
-                        <p>You will see a scene like the one below. The blue circle is the agent. The red and blue boxes are potential goals. Your task is to judge which goal the agent wants after observing its movement.</p>
-                        <img src="https://placehold.co/600x400/e2e8f0/334155?text=Example+Scene" alt="Example Scene" class="w-full max-w-lg mx-auto rounded-md shadow-sm my-4">
+                        <p>In each trial, you will see two shapes displayed side by side. Your task is to determine which shape has the larger area.</p>
+                        <img src="https://placehold.co/600x400/e2e8f0/334155?text=Example+Shapes" alt="Example Shapes" class="w-full max-w-lg mx-auto rounded-md shadow-sm my-4">
                     </div>
                 </div>
 
@@ -361,35 +353,36 @@ If more than one gem seems likely, you can select all likely gems. Remember that
                     <span class="demo-Module-label">Module 3 of 4: Practice Trial</span>
                     
                     <div class="rendered-example bg-gray-100 p-4 rounded-md mb-8 border border-gray-200 not-prose">
-                        <img src="https://placehold.co/600x400/e2e8f0/334155?text=Example+Stimulus+Image" alt="Example Stimulus" class="w-full max-w-lg mx-auto rounded-md shadow-sm mb-4">
-                        <p class="text-base text-gray-700 italic text-center mb-6">Observe the agent's action in the image above.</p>
+                        <div style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 2rem;">
+                            <div style="text-align: center;">
+                                <div style="width: 120px; height: 120px; background: #3b82f6; border-radius: 50%; margin: 0 auto 0.5rem;"></div>
+                                <p style="font-size: 0.875rem; color: #4b5563;">Circle</p>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="width: 100px; height: 100px; background: #ef4444; margin: 0 auto 0.5rem;"></div>
+                                <p style="font-size: 0.875rem; color: #4b5563;">Square</p>
+                            </div>
+                        </div>
                         
                         <div class="bg-white p-4 rounded-md shadow-inner">
                             <div class="mb-6">
-                                <p class="font-medium mb-3 text-gray-900">What is the agent's primary goal?</p>
+                                <p class="font-medium mb-3 text-gray-900">Which shape is larger?</p>
                                 <div class="space-y-2">
-                                    <label class="flex items-center"><input type="radio" name="agent-goal-demo" class="form-radio text-blue-600 h-5 w-5"><span class="ml-2 text-gray-700">Reaching the red box</span></label>
-                                    <label class="flex items-center"><input type="radio" name="agent-goal-demo" class="form-radio text-blue-600 h-5 w-5"><span class="ml-2 text-gray-700">Reaching the blue box</span></label>
-                                    <label class="flex items-center"><input type="radio" name="agent-goal-demo" class="form-radio text-blue-600 h-5 w-5"><span class="ml-2 text-gray-700">Looking for a key</span></label>
-                                </div>
-                            </div>
-                            <div>
-                                <p class="font-medium mb-3 text-gray-900">How confident are you in your answer?: <span class="font-semibold">50</span></p>
-                                <div class="slider-wrapper">
-                                    <input type="range" min="0" max="100" value="50" class="w-full" oninput="this.previousElementSibling.innerText = this.value">
+                                    <label class="flex items-center"><input type="radio" name="shape-size-demo" class="form-radio text-blue-600 h-5 w-5"><span class="ml-2 text-gray-700">Circle</span></label>
+                                    <label class="flex items-center"><input type="radio" name="shape-size-demo" class="form-radio text-blue-600 h-5 w-5"><span class="ml-2 text-gray-700">Square</span></label>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="feedback-practice p-4 rounded-md text-sm mt-4">
-                        <strong>Feedback:</strong> In this example, the player is going for the red box!
+                        <strong>Feedback:</strong> In this practice example, the circle is larger than the square.
                     </div>
                 </div>
 
                 <div class="rendered-example">
                     <span class="demo-Module-label">Module 4 of 4: Comprehension Check</span>
                     <div class="space-y-4 text-base text-gray-700">
-                        <p>Please answer the following questions.</p>
+                        <p>Please answer the following questions to confirm your understanding.</p>
                     </div>
 
                     <div class="space-y-6 mt-6">
@@ -398,30 +391,34 @@ If more than one gem seems likely, you can select all likely gems. Remember that
                             <div class="space-y-2" role="radiogroup" aria-labelledby="quiz_q1-label">
                                 <label class="flex items-center p-3 rounded-md hover:bg-gray-50 cursor-pointer">
                                     <input type="radio" name="quiz_q1" value="0" onchange="checkAnswer('quiz_q1-feedback', this.value, 1)" class="form-radio text-blue-600 h-5 w-5">
-                                    <span class="ml-3 text-gray-700">To click the boxes as fast as possible.</span>
+                                    <span class="ml-3 text-gray-700">To count the number of shapes.</span>
                                 </label>
                                 <label class="flex items-center p-3 rounded-md hover:bg-gray-50 cursor-pointer">
                                     <input type="radio" name="quiz_q1" value="1" onchange="checkAnswer('quiz_q1-feedback', this.value, 1)" class="form-radio text-blue-600 h-5 w-5">
-                                    <span class="ml-3 text-gray-700">To determine the agent's goal.</span>
+                                    <span class="ml-3 text-gray-700">To identify which shape is larger.</span>
                                 </label>
                                 <label class="flex items-center p-3 rounded-md hover:bg-gray-50 cursor-pointer">
                                     <input type="radio" name="quiz_q1" value="2" onchange="checkAnswer('quiz_q1-feedback', this.value, 1)" class="form-radio text-blue-600 h-5 w-5">
-                                    <span class="ml-3 text-gray-700">To count the number of circles.</span>
+                                    <span class="ml-3 text-gray-700">To name the shapes.</span>
                                 </label>
                             </div>
                             <div id="quiz_q1-feedback" class="mt-3 text-sm font-medium"></div>
                         </div>
 
                         <div class="bg-white p-4 rounded border border-gray-200">
-                            <p class="font-medium mb-3">Is this a timed experiment?</p>
+                            <p class="font-medium mb-3">How many shapes will you see in each trial?</p>
                             <div class="space-y-2" role="radiogroup" aria-labelledby="quiz_q2-label">
                                 <label class="flex items-center p-3 rounded-md hover:bg-gray-50 cursor-pointer">
                                     <input type="radio" name="quiz_q2" value="0" onchange="checkAnswer('quiz_q2-feedback', this.value, 1)" class="form-radio text-blue-600 h-5 w-5">
-                                    <span class="ml-3 text-gray-700">Yes</span>
+                                    <span class="ml-3 text-gray-700">One</span>
                                 </label>
                                 <label class="flex items-center p-3 rounded-md hover:bg-gray-50 cursor-pointer">
                                     <input type="radio" name="quiz_q2" value="1" onchange="checkAnswer('quiz_q2-feedback', this.value, 1)" class="form-radio text-blue-600 h-5 w-5">
-                                    <span class="ml-3 text-gray-700">No</span>
+                                    <span class="ml-3 text-gray-700">Two</span>
+                                </label>
+                                <label class="flex items-center p-3 rounded-md hover:bg-gray-50 cursor-pointer">
+                                    <input type="radio" name="quiz_q2" value="2" onchange="checkAnswer('quiz_q2-feedback', this.value, 1)" class="form-radio text-blue-600 h-5 w-5">
+                                    <span class="ml-3 text-gray-700">Three</span>
                                 </label>
                             </div>
                             <div id="quiz_q2-feedback" class="mt-3 text-sm font-medium"></div>

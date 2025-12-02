@@ -53,11 +53,15 @@
         .nav-subsection-link.active { background-color: #374151; color: white; border-left-color: #3b82f6; }
         .nav-subsection { position: relative; }
         .nav-subsection-header { display: flex; align-items: center; justify-content: space-between; cursor: pointer; padding: 0.5rem 1.5rem 0.5rem 2.5rem; color: #9ca3af; font-size: 0.875rem; border-left: 3px solid transparent; }
+        .nav-subsection-subsections > .nav-subsection { margin: 0; }
+        .nav-subsection-subsections > .nav-subsection > .nav-subsection-header { margin-left: 0; }
         .nav-subsection-header:hover { background-color: #374151; color: white; }
         .nav-subsection-header.active { background-color: #374151; color: white; border-left-color: #3b82f6; }
         .nav-subsection-subsections { display: none; background-color: #0f172a; }
         .nav-subsection-subsections.expanded { display: block; }
         .nav-subsection-subsections .nav-subsection-link { padding-left: 3.5rem; }
+        .nav-subsection-subsections > .nav-subsection > .nav-subsection-header { padding-left: 3.5rem; }
+        .nav-subsection-subsections > .nav-subsection > .nav-subsection-subsections > .nav-subsection-link { padding-left: 4.5rem; }
         @media (max-width: 768px) {
             .sidebar { width: 100%; height: auto; position: relative; }
             .content-wrapper { margin-left: 0; }
@@ -84,9 +88,16 @@
                         </div>
                         <div class="nav-subsection-subsections">
                             <a href="#query-text" class="nav-subsection-link">3.2.1. text-instruction</a>
-                            <a href="#query-mc" class="nav-subsection-link">3.2.2. multiple-choice</a>
-                            <a href="#query-mc-single" class="nav-subsection-link">3.2.2.1. single-select</a>
-                            <a href="#query-mc-multi" class="nav-subsection-link">3.2.2.2. multi-select</a>
+                            <div class="nav-subsection">
+                                <div class="nav-subsection-header" onclick="toggleNavSection(this)">
+                                    <a href="#query-mc" style="flex: 1; text-decoration: none; color: inherit;">3.2.2. multiple-choice</a>
+                                    <span class="nav-expand-icon">▶</span>
+                                </div>
+                                <div class="nav-subsection-subsections">
+                                    <a href="#query-mc-single" class="nav-subsection-link">3.2.2.1. single-select</a>
+                                    <a href="#query-mc-multi" class="nav-subsection-link">3.2.2.2. multi-select</a>
+                                </div>
+                            </div>
                             <div class="nav-subsection">
                                 <div class="nav-subsection-header" onclick="toggleNavSection(this)">
                                     <a href="#query-slider" style="flex: 1; text-decoration: none; color: inherit;">3.2.3. slider</a>

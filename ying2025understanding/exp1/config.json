@@ -16,7 +16,7 @@
     "stimuli_count": 40,
     "experimentFlow": [
       {
-      "blocks": [
+      "blocks": [["instruction_1", "instruction_2", "instruction_3"],
     ["1_1_1", "1_1_2", "1_1_3"],
     ["1_2_1", "1_2_2", "1_2_3"],
     ["1_3_1", "1_3_2", "1_3_3"],
