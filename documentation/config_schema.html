@@ -187,7 +187,7 @@
                         <tr>
                             <td><code>stimuli_count</code></td>
                             <td>Integer</td>
-                            <td>Total number of unique stimuli/trials defined for this experiment (i.e., the number of entries in <code>trial.jsonl</code> that are referenced by <code>config.json</code>).</td>
+                            <td>Total number of unique stimuli/trials defined for this experiment (i.e., the number of entries in <code>trial.jsonl</code> with <code>id</code> values that are referenced by <code>config.json</code>).</td>
                         </tr>
                     </tbody>
                 </table>
@@ -211,17 +211,23 @@
                         <tr>
                             <td><code>blocks</code></td>
                             <td>Array of Arrays of Strings</td>
-                            <td>A nested array. Each inner array is a "block" of trials. Each string is a <code>stimuli_id</code> from <code>trial.jsonl</code>.</td>
+                            <td>
+                                A nested array. Each inner array is a "block" of experiment components. Each string is an <code>id</code> that can reference:
+                                <ul>
+                                    <li>A trial from <code>trial.jsonl</code> (the <code>id</code> field of a trial object)</li>
+                                    <li>An instruction module from <code>instruction.jsonl</code> (the <code>id</code> field of an instruction module)</li>
+                                    <li>A test trial module from <code>instruction.jsonl</code> (the <code>id</code> field of a test_trial module)</li>
+                                    <li>A comprehension quiz module from <code>instruction.jsonl</code> (the <code>id</code> field of a comprehension_quiz module)</li>
+                                </ul>
+                                To include instructions, test trials, or quizzes in the experiment, their <code>id</code> values must be specified in the blocks array.
+                            </td>
                         </tr>
                         <tr>
                             <td><code>block_randomization</code></td>
-                            <td>Boolean</td>
-                            <td>If <code>true</code>, the order of the "blocks" (the inner arrays) is randomized for each participant.</td>
-                        </tr>
-                        <tr>
-                            <td><code>stimuli_randomization</code></td>
-                            <td>Boolean</td>
-                            <td>If <code>true</code>, the order of the trial <code>stimuli_id</code>s <em>within</em> each block is randomized.</td>
+                            <td>Array of Booleans (optional)</td>
+                            <td>
+                                An optional array of booleans, where each boolean corresponds to a block in the <code>blocks</code> array. If <code>true</code> for a block, that block's order can be randomized relative to other blocks. If not specified, defaults to all <code>false</code> (no randomization). The length of this array should match the number of blocks.
+                            </td>
                         </tr>
                         <tr>
                             <td><code>experimental_condition</code></td>
@@ -237,31 +243,37 @@
   {
     "experimental_condition": "condition_1",
     "blocks": [
-      [ "trial_1_1", "trial_1_2", "trial_1_3" ],
-      [ "trial_2_1", "trial_2_2" ]
+      [ "instruction_01", "test_trial_01"],
+      [ "trial_1_1", "trial_1_2", "trial_1_3" ]
     ],
-    "block_randomization": true,
-    "stimuli_randomization": false
+    "block_randomization": [false, true],
   },
   {
     "experimental_condition": "condition_2",
     "blocks": [
-      [ "trial_3_1", "trial_3_2" ]
+      [ "instruction_02", "test_trial_02"],
+      [ "trial_2_1", "trial_2_2", "trial_2_3" ]
     ],
-    "block_randomization": true,
-    "stimuli_randomization": false
+    "block_randomization": [false, true],
   }
 ]</code></pre>
             <p>In this example:</p>
             <ul>
                 <li>There are two experimental conditions. The interface will randomly present one of the two conditions to the participant. You do not need to specify the experimental condition field if there is only one condition.</li>
-                <li>Within the first experimental condition, there are two blocks of trials. Because <code>block_randomization</code> is <code>true</code>, the experiment will randomly present either Block 1 (<code>["trial_1_1", ...]</code>) or Block 2 (<code>["trial_2_1", ...]</code>) first.</li>
+                <li>Within the first experimental condition, there are two blocks. The first block includes an instruction module (<code>"instruction_01"</code>) and a test trial (<code>"test_trial_01"</code>). The second block includes three regular trials (<code>"trial_1_1"</code>, <code>"trial_1_2"</code>, <code>"trial_1_3"</code>).</li>
+                <li>The <code>block_randomization</code> array is <code>[false, true]</code>, meaning the first block (index 0) will not be randomized, while the second block (index 1) can be randomized relative to other blocks. If <code>block_randomization</code> is not specified, it defaults to all <code>false</code> (no randomization).</li>
+                <li>All IDs (for instructions, test trials, quizzes, and regular trials) must match the <code>id</code> fields defined in their respective files (<code>instruction.jsonl</code> or <code>trial.jsonl</code>).</li>
             </ul>
         </section>
 
         <section id="full-example">
             <h2>2.3. Full <code>config.json</code> Example</h2>
-            <p>Here is what a complete <code>config.json</code> file looks like, combining the metadata and the experiment flow. The <code>stimuli_id</code> strings (e.g., <code>"trial_1_1"</code>) in the <code>blocks</code> array refer to the trial objects defined in your <a href="trial_schema.html">Trial Schema (<code>trial.jsonl</code>)</a> file.</p>
+            <p>Here is what a complete <code>config.json</code> file looks like, combining the metadata and the experiment flow. The <code>id</code> strings in the <code>blocks</code> array can refer to:</p>
+            <ul>
+                <li>Trial objects from your <a href="trial_schema.html">Trial Schema (<code>trial.jsonl</code>)</a> file (e.g., <code>"trial_1_1"</code>)</li>
+                <li>Instruction, test trial, or comprehension quiz modules from your <a href="instruction_schema.html">Instruction Schema (<code>instruction.jsonl</code>)</a> file (e.g., <code>"instruction_01"</code>, <code>"test_trial_01"</code>, <code>"comprehension_quiz_01"</code>)</li>
+            </ul>
+            <p>All IDs must match the <code>id</code> fields defined in their respective source files.</p>
             <pre><code>{
   "experimentName": "Epistemic Language Understanding",
   "description": "Participants observe short animations and answer questions about the agent's goals and beliefs.",
@@ -282,11 +294,10 @@
   "experimentFlow": [
     {
       "blocks": [
-        [ "trial_1_1", "trial_1_2", "trial_1_3" ],
-        [ "trial_2_1", "trial_2_2", "trial_2_3", "trial_2_4" ]
+        [ "instruction_01", "test_trial_01", "trial_1_1", "trial_1_2", "trial_1_3" ],
+        [ "trial_2_1", "trial_2_2", "trial_2_3", "trial_2_4", "comprehension_quiz_01" ]
       ],
-      "block_randomization": true,
-      "stimuli_randomization": false
+      "block_randomization": [false, true]
     }
   ]
 }</code></pre>

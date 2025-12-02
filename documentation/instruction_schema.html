@@ -196,6 +196,11 @@
                 </thead>
                 <tbody>
                     <tr>
+                        <td><code>id</code></td>
+                        <td>String</td>
+                        <td>A unique identifier for this module (e.g., "instruction_01").</td>
+                    </tr>
+                    <tr>
                         <td><code>type</code></td>
                         <td>String</td>
                         <td>Must be <code>"instruction"</code>.</td>
@@ -227,6 +232,11 @@
                 </thead>
                 <tbody>
                     <tr>
+                        <td><code>id</code></td>
+                        <td>String</td>
+                        <td>A unique identifier for this module (e.g., "test_trial_01").</td>
+                    </tr>
+                    <tr>
                         <td><code>type</code></td>
                         <td>String</td>
                         <td>Must be <code>"test_trial"</code>.</td>
@@ -234,7 +244,7 @@
                     <tr>
                         <td><code>stimuli_id</code></td>
                         <td>String</td>
-                        <td>The <code>stimuli_id</code> of the trial from <code>trial.jsonl</code> to display.</td>
+                        <td>The <code>id</code> of the trial from <code>trial.jsonl</code> to display.</td>
                     </tr>
                     <tr>
                         <td><code>feedback</code></td>
@@ -257,6 +267,11 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <tr>
+                        <td><code>id</code></td>
+                        <td>String</td>
+                        <td>A unique identifier for this module (e.g., "comprehension_quiz_01").</td>
+                    </tr>
                     <tr>
                         <td><code>type</code></td>
                         <td>String</td>
@@ -281,10 +296,12 @@
             <h2>4.5. Full <code>instruction.jsonl</code> Example</h2>
             <p>This example shows a sequence containing a welcome page, an instruction page with an image, a test trial, and a final comprehension quiz for a simple shape size detection task.</p>
             <pre><code>{
+  "id": "instruction_01",
   "type": "instruction",
   "text": "<p>Thank you for participating in this experiment.</p><p><strong>Your task is to identify which shape is larger.</strong></p><p>You will see two shapes side by side. Please carefully compare their sizes and select your answer.</p>"
 }
 {
+  "id": "instruction_02",
   "type": "instruction",
   "text": "<p>In each trial, you will see two shapes displayed side by side. Your task is to determine which shape has the larger area.</p>",
   "media_url": [
@@ -292,11 +309,13 @@
   ]
 }
 {
+  "id": "test_trial_01",
   "type": "test_trial",
   "stimuli_id": "practice_1",
   "feedback": "In this practice example, the circle is larger than the square."
 }
 {
+  "id": "comprehension_quiz_01",
   "type": "comprehension_quiz",
   "text": "<p>Please answer the following questions to confirm your understanding.</p>",
   "queries": [
